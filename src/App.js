@@ -4,6 +4,7 @@ import Header from './components/header';
 import Sidebar from './components/sidebar';
 import Router from './routing';
 import Loading from './components/loading';
+import ErrorMessage from './components/error-message';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <div className="App-main">
           <Sidebar />
           <Router />
+          <ErrorMessage />
         </div>
         <Loading />
       </div>

@@ -25,7 +25,9 @@ export default () => {
       <Route exact path="/app/broker/markets" component={Markets} />
       <Route exact path="/app/broker/my-deals" component={MyDeals} />
       <Route exact path="/app/broker/dashboard" component={BrokerDashboard} />
+      
       <Route exact path="/login" component={Login} />
+      <Route exact path="/home" component={Home} />
       <Route exact path="/" component={Home} />
     </Switch>
   );

@@ -33,8 +33,8 @@ const Login = (props: any) => {
         props.history.push('/app/broker/dashboard');
       }
     } catch(e: any) {
-      console.log(e);
       dispatch({ type: ActionTypes.SET_APP_LOADING, payload: false });
+      dispatch({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
     }
   };
 

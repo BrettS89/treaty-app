@@ -4,6 +4,8 @@ export interface AnyAction {
 }
 
 export enum ActionTypes {
+  CLOSE_SNACKBAR,
   SET_APP_LOADING,
+  SET_APP_ERROR,
   SET_USER,
 }

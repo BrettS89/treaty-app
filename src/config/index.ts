@@ -13,4 +13,4 @@ const url = (env: string): string => {
   }
 };
 
-export default url('STAGING');
+export default url('LOCAL');

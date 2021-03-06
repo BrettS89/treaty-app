@@ -1,10 +1,13 @@
 import './styles.css';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Avatar, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import { StoreState } from '../../store';
 import useStyles from './styles';
 import { brokerSidebar, purchaserSidebar } from './sidebar-content';
 
 const Sidebar = (props: any) => {
+  const user = useSelector((state: StoreState) => state.user);
   const classes = useStyles();
   const currentPath = props.location.pathname;
   const styles = currentPath.includes('app')
@@ -43,9 +46,9 @@ const Sidebar = (props: any) => {
         {renderSidebarList()}
       </List>
       <div className="Sidebar-company">
-        <Avatar>B</Avatar>
+        <Avatar>{user?.details?.account?.name[0]}</Avatar>
         <Typography className={classes.typography}>
-          Beach & Associates
+          {user?.details?.account?.name}
         </Typography>
       </div>
     </div>
