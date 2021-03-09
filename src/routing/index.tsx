@@ -9,17 +9,17 @@ import MyDeals from '../modules/app/broker/my-deals';
 import Markets from '../modules/app/broker/markets';
 import CreateDeal from '../modules/app/broker/create-deal';
 
-// Purchaser components
-import PurchaserDashboard from '../modules/app/purchaser/dashboard';
-import PurchaserDeals from '../modules/app/purchaser/my-deals';
-import SearchDeals from '../modules/app/purchaser/search-deals';
+// reinsurer components
+import reinsurerDashboard from '../modules/app/reinsurer/dashboard';
+import reinsurerDeals from '../modules/app/reinsurer/my-deals';
+import SearchDeals from '../modules/app/reinsurer/search-deals';
 
 export default () => {
   return (
     <Switch>
-      <Route exact path="/app/purchaser/search-deals" component={SearchDeals} />
-      <Route exact path="/app/purchaser/my-deals" component={PurchaserDeals} />
-      <Route exact path="/app/purchaser/dashboard" component={PurchaserDashboard} />
+      <Route exact path="/app/reinsurer/search-deals" component={SearchDeals} />
+      <Route exact path="/app/reinsurer/my-deals" component={reinsurerDeals} />
+      <Route exact path="/app/reinsurer/dashboard" component={reinsurerDashboard} />
       
       <Route exact path="/app/broker/create-deal" component={CreateDeal} />
       <Route exact path="/app/broker/markets" component={Markets} />

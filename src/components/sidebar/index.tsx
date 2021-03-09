@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Avatar, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import { StoreState } from '../../store';
 import useStyles from './styles';
-import { brokerSidebar, purchaserSidebar } from './sidebar-content';
+import { brokerSidebar, reinsurerSidebar } from './sidebar-content';
 
 const Sidebar = (props: any) => {
   const user = useSelector((state: StoreState) => state.user);
@@ -16,7 +16,7 @@ const Sidebar = (props: any) => {
 
   const getSidebar = () => {
     if (currentPath.includes('broker')) return brokerSidebar;
-    if (currentPath.includes('purchaser')) return purchaserSidebar;
+    if (currentPath.includes('reinsurer')) return reinsurerSidebar;
     return [];
   }
 

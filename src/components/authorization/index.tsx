@@ -25,9 +25,9 @@ const authorization = (ChildComponent: any) => {
 
       if (path.includes('app') && !role) {
         props.history.push('/');
-      } else if (path.includes('broker') && role?.name.includes('purchaser')) {
-        props.history.push('/app/purchaser/dashboard');
-      } else if (path.includes('purchaser') && role?.name.includes('broker')) {
+      } else if (path.includes('broker') && role?.name.includes('reinsurer')) {
+        props.history.push('/app/reinsurer/dashboard');
+      } else if (path.includes('reinsurer') && role?.name.includes('broker')) {
         props.history.push('/app/broker/dashboard');
       }
     }

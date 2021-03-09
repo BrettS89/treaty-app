@@ -27,12 +27,13 @@ const Login = (props: any) => {
       dispatch({ type: ActionTypes.SET_APP_LOADING, payload: false });
       if (res.user.role.name.includes('broker')) {
         props.history.push('/app/broker/dashboard');
-      } else if (res.user.role.name.includes('purchaser')) {
-        props.history.push('/app/purchaser/dashboard');
+      } else if (res.user.role.name.includes('reinsurer')) {
+        props.history.push('/app/reinsurer/dashboard');
       } else if (res.user.role.name === 'superadmin') {
         props.history.push('/app/broker/dashboard');
       }
     } catch(e: any) {
+      console.log(e)
       dispatch({ type: ActionTypes.SET_APP_LOADING, payload: false });
       dispatch({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
     }

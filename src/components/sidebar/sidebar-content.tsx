@@ -28,20 +28,20 @@ export const brokerSidebar = [
   }
 ];
 
-export const purchaserSidebar = [
+export const reinsurerSidebar = [
   {
     text: 'Dashboard',
     Icon: DesktopWindowsRoundedIcon,
-    path: '/app/purchaser/dashboard',
+    path: '/app/reinsurer/dashboard',
   },
   {
     text: 'My deals',
     Icon: LibraryBooksRoundedIcon,
-    path: '/app/purchaser/my-deals',
+    path: '/app/reinsurer/my-deals',
   },
   {
     text: 'Search deals',
     Icon: SearchRoundedIcon,
-    path: '/app/purchaser/search-deals',
+    path: '/app/reinsurer/search-deals',
   },
 ];

@@ -2,10 +2,10 @@ import './styles.css';
 import authorization from '../../../../components/authorization';
 import View from './view';
 
-const PurchaserDeals = () => {
+const reinsurerDeals = () => {
   return (
     <View />
   );
 };
 
-export default authorization(PurchaserDeals);
+export default authorization(reinsurerDeals);
