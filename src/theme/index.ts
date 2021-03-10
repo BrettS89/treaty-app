@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "\"Questrial\", sans-serif",
+    fontFamily: "\"Roboto\", sans-serif",
     button: {
       textTransform: 'none',
       //@ts-ignore

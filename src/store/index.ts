@@ -5,6 +5,8 @@ import rootReducer from './reducers';
 import rootSagas from './sagas';
 
 export * from './reducers';
+export * from './actions';
+export * from './selectors';
 
 const sagaMiddleware = createSagaMiddleware();
 

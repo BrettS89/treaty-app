@@ -19,8 +19,6 @@ const SearchDeals = () => {
           },
         },
       });
-    
-    console.log(data);
   };
 
   useEffect(() => {

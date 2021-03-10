@@ -5,6 +5,7 @@ import Sidebar from './components/sidebar';
 import Router from './routing';
 import Loading from './components/loading';
 import ErrorMessage from './components/error-message';
+import CreateDealModal from './components/create-deal-modal';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Sidebar />
           <Router />
           <ErrorMessage />
+          <CreateDealModal />
         </div>
         <Loading />
       </div>

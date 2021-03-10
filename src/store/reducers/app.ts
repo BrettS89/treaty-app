@@ -6,6 +6,7 @@ export interface AppState {
     message: string;
   };
   snackbarOpen: boolean;
+  dealModalOpen: boolean;
 }
 
 const INITIAL_STATE: AppState = {
@@ -14,6 +15,7 @@ const INITIAL_STATE: AppState = {
     message: '',
   },
   snackbarOpen: false,
+  dealModalOpen: false,
 };
 
 const reducer = (state: AppState = INITIAL_STATE, { type, payload }: any) => {
@@ -40,6 +42,12 @@ const reducer = (state: AppState = INITIAL_STATE, { type, payload }: any) => {
         error: {
           message: '',
         },
+      };
+
+    case ActionTypes.TOGGLE_DEAL_MODAL:
+      return {
+        ...state,
+        dealModalOpen: payload,
       };
 
     default:

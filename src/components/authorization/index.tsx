@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionTypes } from '../../store/actions';
 import { StoreState } from '../../store';
@@ -10,6 +10,8 @@ const authorization = (ChildComponent: any) => {
     const user = useSelector((state: StoreState) => state.user);
     const path = props.location.pathname;
 
+    const [finishedAuth, setFinishedAuth] = useState<boolean>(false);
+
     const checkRole = async (): Promise<void> => {
       let role = user?.details?.role;
       
@@ -18,6 +20,7 @@ const authorization = (ChildComponent: any) => {
           const { data } = await app.service('security/session').find();
           role = data.role;
           dispatch({ type: ActionTypes.SET_USER, payload: data });
+          setFinishedAuth(true)
         } catch(e) {
           props.history.push('/');
         }
@@ -30,15 +33,19 @@ const authorization = (ChildComponent: any) => {
       } else if (path.includes('reinsurer') && role?.name.includes('broker')) {
         props.history.push('/app/broker/dashboard');
       }
+
+      setFinishedAuth(true)
     }
 
     useEffect(() => {
       checkRole();
     }, [user, path]);
 
-    return (
-      <ChildComponent {...props} />
-    );
+    return finishedAuth
+      ? (
+        <ChildComponent {...props} />
+      )
+      : <div />
   }
 
   return ComposedComponent
