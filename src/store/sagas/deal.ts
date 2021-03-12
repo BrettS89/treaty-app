@@ -9,6 +9,7 @@ import _ from 'lodash';
 export default [
   createDealWatcher,
   brokerGetMyDealsWatcher,
+  editDealWatcher,
 ];
 
 function * createDealWatcher() {
@@ -17,6 +18,10 @@ function * createDealWatcher() {
 
 function * brokerGetMyDealsWatcher() {
   yield takeLatest(ActionTypes.GET_MY_DEALS, brokerGetMyDealsHandler);
+}
+
+function * editDealWatcher() {
+  yield takeLatest(ActionTypes.EDIT_DEAL, editDealHandler);
 }
 
 interface CreateDealHandlerProps { 
@@ -34,7 +39,7 @@ interface CreateDealHandlerProps {
 function * createDealHandler({ payload: { data, navigate } }: CreateDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
-    const createDeal = () => app.service('insurance/deal').create(data)
+    const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true } }})
     const deal = yield call(createDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -59,6 +64,7 @@ function * brokerGetMyDealsHandler() {
         user_id: userState.details._id,
         $sort: { createdAt: -1 },
         $limit: 1000,
+        $resolve: { details: true },
       },
     };
     const getDeals = () => app.service('insurance/deal').find(query);
@@ -68,5 +74,34 @@ function * brokerGetMyDealsHandler() {
   } catch(e) {
     console.log(e);
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+    yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
+  }
+}
+
+interface EditDealHandlerProps { 
+  payload: {
+    _id: string;
+    data: Record<string, any>;
+  };
+  type: 'EDIT_DEAL';
+}
+
+function * editDealHandler ({ payload:{ _id, data } }: EditDealHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const editDeal = () => app.service('insurance/deal').patch(_id, data, { query: { $resolve: { details: true } }});
+    const deal = yield call(editDeal);
+    const dealState = yield select(dealSelector);
+    const myDealsClone = _.cloneDeep(dealState.myDeals);
+    const updatedDeals = myDealsClone.map(d =>
+      d._id === deal._id
+        ? deal
+        : d
+    );
+    yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+    yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
   }
 }

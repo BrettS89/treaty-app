@@ -1,3 +1,42 @@
 .Deal {
   padding: 20px;
+  width: 100%;
+}
+
+.Deal-row {
+  display: flex;
+  align-items: center;
+}
+
+.Deal-title {
+  margin-bottom: 20px;
+}
+
+.Deal-detail {
+  margin-bottom: 7px;
+}
+
+.Deal-summary {
+  margin-top: 23px;
+}
+
+.Deal-summary-title {
+  display: flex;
+}
+
+.Deal-details {
+  margin-top: 20px;
+}
+
+.Detail {
+  width: 500px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Detail-content {
+  display: flex;
+  align-items: center;
 }

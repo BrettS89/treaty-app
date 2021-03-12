@@ -6,6 +6,7 @@ export interface AnyAction {
 export const ActionTypes = {
   CREATE_DEAL: 'CREATE_DEAL',
   CLOSE_SNACKBAR: 'CLOSE_SNACKBAR',
+  EDIT_DEAL: 'EDIT_DEAL',
   GET_MY_DEALS: 'GET_MY_DEALS',
   SET_APP_LOADING: 'SET_APP_LOADING',
   SET_APP_ERROR: 'SET_APP_ERROR',
