@@ -9,22 +9,24 @@ interface DealViewProps {
   deal: Deal;
   detailsList: JSX.Element[];
   editing: string;
+  editingDetail: string;
   onCancel(): void;
-  onSaveField(): void;
+  onSaveField(str?: string): void;
   setDetailsList(el: JSX.Element[]): void;
   setEditedValue(inpt: string | number): void;
   setEditing(str: string): void; 
+  setEditingDetail(str: string): void
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, detailsList, editing, onCancel, onSaveField, setDetailsList, setEditedValue, setEditing } = props;
+  const { addDetail, deal, detailsList, editing, editingDetail, onCancel, onSaveField, setDetailsList, setEditedValue, setEditing, setEditingDetail } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
     if (editing !== 'title') {
       return (
         <div className="Deal-row Deal-title">
-          <Typography variant="h4">
+          <Typography variant="h4" className="title">
             {deal.title}
           </Typography>
           <Button
@@ -54,7 +56,7 @@ const View = (props: DealViewProps) => {
         </Button>
         <Button
           color="primary"
-          onClick={onSaveField}
+          onClick={() => onSaveField()}
         >
           Save
         </Button>
@@ -64,163 +66,14 @@ const View = (props: DealViewProps) => {
 
   const renderDetails = (): JSX.Element[] => 
     deal.details.map((detail) => (
-      <Detail detail={detail} />
+      <Detail
+        detail={detail}
+        editingDetail={editingDetail}
+        onSaveField={onSaveField}
+        setEditingDetail={setEditingDetail}  
+        setEditedValue={setEditedValue}
+      />
     ));
-
-
-  // const renderGrossWrittenPremium = (): JSX.Element => {
-  //   if (editing === 'gross_written_premium') {
-  //     return (
-  //       <div className="Deal-row Deal-detail">
-  //         <Typography variant="h6">
-  //           Gross written premium:
-  //         </Typography>
-  //         <TextField
-  //           className={classes.leftMargin}
-  //           style={{ height: 10 }}
-  //           type="number"
-  //           size="small"
-  //           variant="outlined"
-  //           label="Amount"
-  //           autoComplete="off"
-  //           onChange={e => setEditedValue(Number(e.target.value))}
-  //         />
-  //         <Button
-  //           className={classes.leftMargin}
-  //           onClick={onCancel}
-  //         >
-  //           Cancel
-  //         </Button>
-  //         <Button
-  //           color="primary"
-  //           onClick={onSaveField}
-  //         >
-  //           Save
-  //         </Button>
-  //       </div>
-  //     );
-  //   }
-  //   return (
-  //     <div className="Deal-row Deal-detail">
-  //       <Typography variant="h6">
-  //         Gross written premium:
-  //       </Typography>
-  //       <Typography variant="h6" className={classes.leftMargin} color="primary">
-  //         {formatDollarAmount(deal.gross_written_premium)}
-  //       </Typography>
-  //       <Button
-  //         className={classes.leftMargin}
-  //         color="primary"
-  //         onClick={() => setEditing('gross_written_premium')}
-  //       >
-  //         Edit
-  //       </Button>
-  //     </div>
-  //   );
-  // };
-
-  // const renderProjectedLossRatio = (): JSX.Element => {
-  //   if (editing === 'projected_loss_ratio') {
-  //     return (
-  //       <div className="Deal-row Deal-detail">
-  //         <Typography variant="h6">
-  //           Projected loss ratio:
-  //         </Typography>
-  //         <TextField
-  //           className={classes.leftMargin}
-  //           style={{ height: 10 }}
-  //           type="number"
-  //           size="small"
-  //           variant="outlined"
-  //           label="Amount"
-  //           autoComplete="off"
-  //           onChange={e => setEditedValue(Number(e.target.value))}
-  //         />
-  //         <Button
-  //           className={classes.leftMargin}
-  //           onClick={onCancel}
-  //         >
-  //           Cancel
-  //         </Button>
-  //         <Button
-  //           color="primary"
-  //           onClick={onSaveField}
-  //         >
-  //           Save
-  //         </Button>
-  //       </div>
-  //     )
-  //   }
-  //   return (
-  //     <div className="Deal-row Deal-detail">
-  //       <Typography variant="h6">
-  //         Projected loss ratio:
-  //       </Typography>
-  //       <Typography variant="h6" className={classes.leftMargin} color="primary">
-  //         {deal.projected_loss_ratio}%
-  //       </Typography>
-        
-  //       <Button
-  //         className={classes.leftMargin}
-  //         color="primary"
-  //         onClick={() => setEditing('projected_loss_ratio')}
-  //       >
-  //         Edit
-  //       </Button>
-  //     </div>
-  //   );
-  // };
-
-  // const renderLimit = (): JSX.Element => {
-  //   if (editing === 'limit') {
-  //     return (
-  //       <div className="Deal-row Deal-detail">
-  //         <Typography variant="h6">
-  //           Limit:
-  //         </Typography>
-  //         <TextField
-  //           className={classes.leftMargin}
-  //           style={{ height: 10 }}
-  //           type="number"
-  //           size="small"
-  //           variant="outlined"
-  //           label="Amount"
-  //           autoComplete="off"
-  //           onChange={e => setEditedValue(Number(e.target.value))}
-  //         />
-  //         <Button
-  //           className={classes.leftMargin}
-  //           onClick={onCancel}
-  //         >
-  //           Cancel
-  //         </Button>
-  //         <Button
-  //           color="primary"
-  //           onClick={onSaveField}
-  //         >
-  //           Save
-  //         </Button>
-  //       </div>
-  //     );
-  //   }
-  //   return (
-  //     <div className="Deal-row Deal-detail">
-  //       <Typography variant="h6">
-  //         Limit: 
-  //       </Typography>
-  //       <Typography variant="h6" className={classes.leftMargin} color="primary">
-  //         {formatDollarAmount(deal.limit)}
-  //       </Typography>
-  //       <Button
-  //         className={classes.leftMargin}
-  //         color="primary"
-  //         onClick={() => setEditing('limit')}
-  //       >
-  //         Edit
-  //       </Button>
-  //     </div>
-  //   );
-  // };
 
   const renderTreatyType = () => {
     return (
@@ -252,7 +105,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-summary">
         <div className="Deal-summary-title">
-          <Typography variant="h6">
+          <Typography variant="h6" className="title">
             Additional details
           </Typography>
           <Button
@@ -276,7 +129,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-summary">
           <div className="Deal-summary-title">
-            <Typography variant="h6">
+            <Typography variant="h6" className="title">
               Executive Summary
             </Typography>
             <Button
@@ -287,7 +140,7 @@ const View = (props: DealViewProps) => {
             </Button>
             <Button
               color="primary"
-              onClick={onSaveField}
+              onClick={() => onSaveField()}
             >
               Save
             </Button>
@@ -308,7 +161,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-summary">
         <div className="Deal-summary-title">
-          <Typography variant="h6">
+          <Typography variant="h6" className="title">
             Executive Summary
           </Typography>
           <Button
@@ -331,14 +184,14 @@ const View = (props: DealViewProps) => {
       {renderTitle()}
 
       <div>
-        <Typography variant="h6" >
+        <Typography variant="h6" className="title">
           Treaty type
         </Typography>
 
         {renderTreatyType()}
       </div>
 
-      <div className="Deal-details">
+      <div className="Deal-details title">
         <Typography variant="h6" className={classes.detailsSectionTitle}>
           Treaty details
         </Typography>
@@ -353,6 +206,7 @@ const View = (props: DealViewProps) => {
               label="Add details"
             >
               <MenuItem value="projected_gross_premium">Projected gross premium</MenuItem>
+              <MenuItem value="projected_gross_premium">Projected net premium</MenuItem>
               <MenuItem value="projected_loss_ratio">Projected loss ratio</MenuItem>
               <MenuItem value="term">Term</MenuItem>
               <MenuItem value="business_covered">Business covered</MenuItem>
@@ -362,15 +216,9 @@ const View = (props: DealViewProps) => {
             </Select>
           </FormControl>
         </div>
-
-      
-        
+          
         {renderDetails()}
       </div>
-      {/* <Detail detail={{ key: "Stone", value: "Cold" }} />
-      <Detail detail={{ key: "Stone", value: "Cold" }} />
-      <Detail detail={{ key: "Stone", value: "Cold" }} /> */}
-
 
       {renderAdditionalDetails()}
       {renderExecutiveSummary()}

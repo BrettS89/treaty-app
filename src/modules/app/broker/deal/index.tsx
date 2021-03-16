@@ -33,18 +33,32 @@ const Deal = (props: any) => {
   }
 
   const [editing, setEditing] = useState<string>('');
+  const [editingDetail, setEditingDetail] = useState<string>('')
   const [editedValue, setEditedValue] = useState<string | number>(null);
   const [detailsList, setDetailsList] = useState<JSX.Element[]>([]);
 
-  const onSaveField = () => {
-    dispatch({
-      type: ActionTypes.EDIT_DEAL,
-      payload: {
-        _id: deal._id,
-        data: { [editing]: editedValue }
-      },
-    });
+  const onSaveField = (detail_id?: string) => {
+    if (editingDetail) {
+      dispatch({
+        type: ActionTypes.EDIT_DETAIL,
+        payload: {
+          _id: detail_id,
+          data: {
+            value: editedValue,
+          },
+        },
+      });
+    } else {
+      dispatch({
+        type: ActionTypes.EDIT_DEAL,
+        payload: {
+          _id: deal._id,
+          data: { [editing]: editedValue }
+        },
+      });
+    }
 
+    setEditingDetail('');
     setEditing('');
     setEditedValue(null);
   };
@@ -87,11 +101,13 @@ const Deal = (props: any) => {
       deal={dealData}
       detailsList={detailsList}
       editing={editing}
+      editingDetail={editingDetail}
       onCancel={onCancel}
       onSaveField={onSaveField}
       setDetailsList={setDetailsList}
       setEditedValue={setEditedValue}
       setEditing={setEditing}
+      setEditingDetail={setEditingDetail}
     />
   )
   : <div></div>

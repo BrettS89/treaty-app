@@ -7,7 +7,7 @@ const Header = (props: any) => {
   const classes = useStyles();
 
   return (
-    <AppBar elevation={2} position="static" color="primary" className={classes.appBar}>
+    <AppBar elevation={1} position="static" color="primary" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         <div className={classes.leftItems} onClick={() => props.history.push('/')}>
           <LandscapeRoundedIcon style={{ fontSize: 44, color: 'white', paddingBottom: 1 }} />

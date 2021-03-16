@@ -24,6 +24,13 @@ const Login = (props: any) => {
 
       localStorage.setItem('token', res.token);
       dispatch({ type: ActionTypes.SET_USER, payload: res.user });
+
+      if (res.user?.role?.name === 'broker') {
+        dispatch({ type: ActionTypes.GET_MY_DEALS });
+      } else if (res.user?.role?.name === 'reinsurer') {
+        dispatch({ type: ActionTypes.SEARCH_DEALS, payload: res.user?.account_id });
+      }
+
       dispatch({ type: ActionTypes.SET_APP_LOADING, payload: false });
       if (res.user.role.name.includes('broker')) {
         props.history.push('/app/broker/dashboard');

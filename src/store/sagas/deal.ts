@@ -10,6 +10,8 @@ export default [
   createDealWatcher,
   brokerGetMyDealsWatcher,
   editDealWatcher,
+  editDetailWatcher,
+  searchDealWatcher
 ];
 
 function * createDealWatcher() {
@@ -22,6 +24,14 @@ function * brokerGetMyDealsWatcher() {
 
 function * editDealWatcher() {
   yield takeLatest(ActionTypes.EDIT_DEAL, editDealHandler);
+}
+
+function * editDetailWatcher() {
+  yield takeLatest(ActionTypes.EDIT_DETAIL, editDetailHandler);
+}
+
+function * searchDealWatcher() {
+  yield takeLatest(ActionTypes.SEARCH_DEALS, searchDealsHandler);
 }
 
 interface CreateDealHandlerProps { 
@@ -72,7 +82,6 @@ function * brokerGetMyDealsHandler() {
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: deals.data });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch(e) {
-    console.log(e);
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
     yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
   }
@@ -103,5 +112,69 @@ function * editDealHandler ({ payload:{ _id, data } }: EditDealHandlerProps) {
   } catch(e) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
     yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
+  }
+}
+
+interface EditDetailHandlerProps {
+  type: 'EDIT_DETAIL';
+  payload: {
+    _id: string;
+    data: Record<string, any>;
+  }
+}
+
+function * editDetailHandler ({ payload: { _id, data } }: EditDetailHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const fn = () => app.service('insurance/detail').patch(_id, data);
+    const detail = yield call(fn)
+    const dealState = yield select(dealSelector);
+    const myDealsClone = _.cloneDeep(dealState.myDeals);
+
+    const updatedDeals = myDealsClone.map(deal => {
+      if (deal._id === detail.deal_id) {
+        const details = deal.details.map(d => {
+          return d._id === detail._id
+            ? detail
+            : d;
+        });
+        return {
+          ...deal,
+          details,
+        };
+      }
+      return deal;
+    });
+    yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  }
+}
+
+interface SearchDealsProps {
+  type: string;
+  payload: {
+    account_id: string
+  }
+}
+
+function * searchDealsHandler({ payload: { account_id } }: SearchDealsProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const query = {
+      query: {
+        account_id,
+        $resolve: { deal: true },
+        $sort: { createdAt: -1 },
+      },
+    };
+    const fn = () => app.service('insurance/access').find(query);
+    const deals = yield call(fn);
+    const dealState = yield select(dealSelector);
+    yield put({ type: ActionTypes.SET_ACCESSIBLE_DEALS, payload: [...dealState.accessibleDeals, ...deals.data] });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   }
 }

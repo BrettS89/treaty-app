@@ -19,6 +19,12 @@ const dealReducer = (state = INITIAL_STATE, { type, payload }) => {
         myDeals: payload,
       };
 
+    case ActionTypes.SET_ACCESSIBLE_DEALS:
+      return {
+        ...state,
+        accessibleDeals: payload,
+      };
+
     default:
       return state;
   }

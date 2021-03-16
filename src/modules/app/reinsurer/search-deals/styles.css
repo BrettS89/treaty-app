@@ -1,3 +1,25 @@
 .SearchDeals {
+  background-color: #F6F7FB;
   padding: 20px;
+  width: 100%;
+}
+
+.ReDealCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.ReDealCard-left {
+  display: flex;
+  align-items: center;
+}
+
+.ReDealCard-insurance {
+  margin-left: 50px;
 }

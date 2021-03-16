@@ -10,7 +10,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "\"Roboto\", sans-serif",
+    fontFamily: "\"Proxima Nova\", sans-serif",
     button: {
       textTransform: 'none',
       //@ts-ignore

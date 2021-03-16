@@ -1,10 +1,21 @@
 import './styles.css';
 import View from './view';
 import authorization from '../../../../components/authorization';
+import { useSelector } from 'react-redux';
+import { StoreState } from '../../../../store';
 
-const MyDeals = () => {
+const MyDeals = (props) => {
+  const deal = useSelector((state: StoreState) => state.deal);
+
+  const navigateToDeal = (_id: string): void => {
+    props.history.push('/app/broker/my-deals/' + _id);
+  };
+
   return (
-    <View />
+    <View
+      myDeals={deal.myDeals}
+      navigateToDeal={navigateToDeal}
+    />
   );
 };
 

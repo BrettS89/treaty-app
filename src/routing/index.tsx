@@ -14,10 +14,12 @@ import Deal from '../modules/app/broker/deal';
 import reinsurerDashboard from '../modules/app/reinsurer/dashboard';
 import reinsurerDeals from '../modules/app/reinsurer/my-deals';
 import SearchDeals from '../modules/app/reinsurer/search-deals';
+import ReDeal from '../modules/app/reinsurer/deal';
 
 export default () => {
   return (
     <Switch>
+      <Route exact path="/app/reinsurer/search-deals/:id" component={ReDeal} />
       <Route exact path="/app/reinsurer/search-deals" component={SearchDeals} />
       <Route exact path="/app/reinsurer/my-deals" component={reinsurerDeals} />
       <Route exact path="/app/reinsurer/dashboard" component={reinsurerDashboard} />

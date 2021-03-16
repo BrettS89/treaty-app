@@ -14,15 +14,22 @@ const useStyles = makeStyles({
     marginBottom: 15
   },
   detailsSectionTitle: {
-    marginBottom: 10
+    marginBottom: 10,
+    fontWeight: 600
   },
   detailKey: {
-    fontWeight: 600,
+    fontWeight: 800,
     fontSize: 15
   },
   detailValue: {
     fontSize: 15,
     marginLeft: 7,
+  },
+  detailInput: {
+    width: 250,
+    padding: 0,
+    height: 35,
+    marginLeft: 5,
   },
   checkbox: {
     paddingTop: 4,
