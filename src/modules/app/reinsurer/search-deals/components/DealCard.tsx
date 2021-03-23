@@ -30,6 +30,7 @@ const DealCard = (props: ReDealCardProps) => {
 
         <div className="ReDealCard-insurance">
           <Typography className={classes.company}>{deal.title}</Typography>
+          <Typography>{deal.insurance_company}</Typography>
           <Typography>Life Insurance</Typography>
           <Typography>{premiumValue}{premiumType}</Typography>
         </div>

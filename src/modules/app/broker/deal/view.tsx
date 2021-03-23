@@ -1,25 +1,24 @@
-import { Button, Checkbox,  FormControl, FormControlLabel, FormGroup, FormHelperText, InputLabel, MenuItem, Select,TextField, Typography } from '@material-ui/core';
+import { Button,  FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select,TextField, Typography } from '@material-ui/core';
+import FolderIcon from '@material-ui/icons/Folder';
+import FiberManualRecordRoundedIcon from '@material-ui/icons/FiberManualRecordRounded';
 import { Deal } from '../../../../types/services/insurance';
 import useStyles from './styles';
 import Detail from './components/Detail';
-import { formatDollarAmount } from '../../../../utilities/helpers';
 
 interface DealViewProps {
   addDetail(arg: any): void;
   deal: Deal;
-  detailsList: JSX.Element[];
   editing: string;
   editingDetail: string;
   onCancel(): void;
   onSaveField(str?: string): void;
-  setDetailsList(el: JSX.Element[]): void;
   setEditedValue(inpt: string | number): void;
   setEditing(str: string): void; 
   setEditingDetail(str: string): void
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, detailsList, editing, editingDetail, onCancel, onSaveField, setDetailsList, setEditedValue, setEditing, setEditingDetail } = props;
+  const { addDetail, deal, editing, editingDetail, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -39,6 +38,7 @@ const View = (props: DealViewProps) => {
         </div>
       );
     }
+
     return (
       <div className="Deal-row Deal-title">
         <TextField
@@ -64,6 +64,60 @@ const View = (props: DealViewProps) => {
     )
   };
 
+  const renderCompanyName = () => {
+    if (editing === 'insurance_company') {
+      return (
+        <div className="Deal-row Deal-title">
+          <div className="Deal-row">
+            <Typography variant="h6" className="title">
+              Insurance company:
+            </Typography>
+            <TextField
+              className={classes.detailInput}
+              size="small"
+              variant="outlined"
+              label="Insurance company name"
+              autoComplete="off"
+              onChange={e => setEditedValue(e.target.value)}
+            />
+          </div>
+          <Button
+            className={classes.leftMargin}
+            onClick={onCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => onSaveField()}
+          >
+            Save
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="Deal-row Deal-title">
+        <div className="Deal-row">
+          <Typography variant="h6" className="title">
+            Insurance company:
+          </Typography>
+          <Typography className={classes.leftMargin}>
+            {deal.insurance_company}
+          </Typography>
+        </div>
+        <Button
+          className={classes.leftMargin}
+          color="primary"
+          onClick={() => setEditing('insurance_company')}
+        >
+          Edit
+        </Button>
+      </div>
+    )
+  }
+
   const renderDetails = (): JSX.Element[] => 
     deal.details.map((detail) => (
       <Detail
@@ -75,33 +129,41 @@ const View = (props: DealViewProps) => {
       />
     ));
 
-  const renderTreatyType = () => {
-    return (
-      <FormControl component="fieldset">
-        <FormHelperText>Select all that apply</FormHelperText>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox className={classes.checkbox} checked={false} onChange={console.log} name="gilad" />}
-            label="Admitted"
-          />
-          <FormControlLabel
-            control={<Checkbox className={classes.checkbox} checked={false} onChange={console.log} name="jason" />}
-            label="Non admitted"
-          />
-          <FormControlLabel
-            control={<Checkbox className={classes.checkbox} checked={false} onChange={console.log} name="antoine" />}
-            label="Risk attaching"
-          />
-          <FormControlLabel
-            control={<Checkbox className={classes.checkbox} checked={false} onChange={console.log} name="antoine" />}
-            label="Losses ocurring durring"
-          />
-        </FormGroup>
-      </FormControl>
-    )
-  }
-
   const renderAdditionalDetails = () => {
+    if (editing === 'additional_details') {
+      return (
+        <div className="Deal-summary">
+          <div className="Deal-summary-title">
+            <Typography variant="h6" className="title">
+              AdditionalDetails
+            </Typography>
+            <Button
+              className={classes.leftMargin}
+              onClick={onCancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => onSaveField()}
+            >
+              Save
+            </Button>
+          </div>
+          <TextField
+            id="outlined-multiline-static"
+            label="AdditionalDetails"
+            multiline
+            style={{ width: '100%', marginTop: 10 }}
+            rows={4}
+            defaultValue={deal.additional_details}
+            variant="outlined"
+            onChange={e => setEditedValue(e.target.value)}
+          />
+        </div>
+      )
+    }
+
     return (
       <div className="Deal-summary">
         <div className="Deal-summary-title">
@@ -118,7 +180,7 @@ const View = (props: DealViewProps) => {
         
         </div>
         <Typography style={{ flexWrap: 'wrap' }}>
-          Include any additional details, bells and whistels, etc. here.
+          {deal.additional_details}
         </Typography>
       </div>
     );
@@ -184,16 +246,85 @@ const View = (props: DealViewProps) => {
       {renderTitle()}
 
       <div>
+        {renderCompanyName()}
+      </div>
+
+      <div className={classes.treatyType}>
         <Typography variant="h6" className="title">
-          Treaty type
+          Treaty Details
         </Typography>
 
-        {renderTreatyType()}
+        <div>
+          <List dense={false}>
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={deal.treaty_type.join(', ')}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={deal.insurance_type.join(', ')}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={`Effective date: ${deal.effective_date}`}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={`Term: ${deal.contract_term}`}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={deal.reinsurance_coverage}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={`Excess Treaty: ${deal.excess_treaty ? 'Yes' : 'No'}`}
+              />
+            </ListItem>
+
+            <ListItem className={classes.bullet}>
+              <ListItemIcon>
+                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
+              </ListItemIcon>
+              <ListItemText
+                primary={deal.admitted.join(', ')}
+              />
+            </ListItem>
+          </List>
+        </div>
       </div>
 
       <div className="Deal-details title">
         <Typography variant="h6" className={classes.detailsSectionTitle}>
-          Treaty details
+          Treaty Information
         </Typography>
 
         <div>
@@ -208,7 +339,6 @@ const View = (props: DealViewProps) => {
               <MenuItem value="projected_gross_premium">Projected gross premium</MenuItem>
               <MenuItem value="projected_gross_premium">Projected net premium</MenuItem>
               <MenuItem value="projected_loss_ratio">Projected loss ratio</MenuItem>
-              <MenuItem value="term">Term</MenuItem>
               <MenuItem value="business_covered">Business covered</MenuItem>
               <MenuItem value="limit">Limit</MenuItem>
               <MenuItem value="cede">Cede</MenuItem>

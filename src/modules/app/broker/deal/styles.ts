@@ -8,6 +8,19 @@ const useStyles = makeStyles({
     width: 600,
     height: 41,
   },
+  treatyType: {
+    padding: 15,
+    paddingRight: 40,
+    backgroundColor: '#F6F7FB',
+    // width: '40%',
+    width: 'auto',
+    display: 'inline-flex',
+    flexDirection: 'column'
+  },
+  bullet: {
+    paddingTop: 1,
+    paddingBottom: 1
+  },
   dropdown: {
     width: 200,
     marginTop: 6,
@@ -18,7 +31,7 @@ const useStyles = makeStyles({
     fontWeight: 600
   },
   detailKey: {
-    fontWeight: 800,
+    fontWeight: 600,
     fontSize: 15
   },
   detailValue: {

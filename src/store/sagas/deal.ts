@@ -68,6 +68,7 @@ function * brokerGetMyDealsHandler() {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
     const userState = yield select(userSelector);
+
     const query = {
       query: {
         account_id: userState.details.account_id,
@@ -77,6 +78,7 @@ function * brokerGetMyDealsHandler() {
         $resolve: { details: true },
       },
     };
+    
     const getDeals = () => app.service('insurance/deal').find(query);
     const deals = yield call(getDeals);
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: deals.data });
@@ -102,11 +104,13 @@ function * editDealHandler ({ payload:{ _id, data } }: EditDealHandlerProps) {
     const deal = yield call(editDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
+
     const updatedDeals = myDealsClone.map(d =>
       d._id === deal._id
         ? deal
         : d
     );
+
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch(e) {
@@ -145,6 +149,7 @@ function * editDetailHandler ({ payload: { _id, data } }: EditDetailHandlerProps
       }
       return deal;
     });
+
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch(e) {

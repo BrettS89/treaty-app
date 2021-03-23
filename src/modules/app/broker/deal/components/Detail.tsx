@@ -36,20 +36,21 @@ const Detail = (props: DetailProps) => {
               onChange={e => setEditedValue(e.target.value)}
             />
           </div>
-          <Button
-            className={classes.leftMargin}
-            color="primary"
-            onClick={onCancelEdit}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={classes.leftMargin}
-            color="primary"
-            onClick={() => onSaveField(_id)}
-          >
-            Save
-          </Button>
+          <div className="Deal-row">
+            <Button
+              className={classes.leftMargin}
+              onClick={onCancelEdit}
+            >
+              Cancel
+            </Button>
+            <Button
+              className={classes.leftMargin}
+              color="primary"
+              onClick={() => onSaveField(_id)}
+            >
+              Save
+            </Button>
+          </div>
         </div>
       );
     }

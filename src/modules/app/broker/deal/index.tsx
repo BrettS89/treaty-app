@@ -8,13 +8,15 @@ import { Deal as DealType, Detail as DetailType } from '../../../../types/servic
 import View from './view';
 import app from '../../../../feathers';
 
-const defaultDeal: DealType = {
+const defaultDeal = {
   account_id: '',
   user_id: '',
   title: 'Title',
   detail_ids: [],
   details: [],
-  executive_summary: 'Executive Summary',
+  insurance_company: 'Abc Insurance',
+  executive_summary: 'Executive summary',
+  additional_details: 'Additional details',
   location: ['New York', 'New Jersey'],
 };
 
@@ -35,7 +37,6 @@ const Deal = (props: any) => {
   const [editing, setEditing] = useState<string>('');
   const [editingDetail, setEditingDetail] = useState<string>('')
   const [editedValue, setEditedValue] = useState<string | number>(null);
-  const [detailsList, setDetailsList] = useState<JSX.Element[]>([]);
 
   const onSaveField = (detail_id?: string) => {
     if (editingDetail) {
@@ -99,12 +100,10 @@ const Deal = (props: any) => {
     <View
       addDetail={addDetail}
       deal={dealData}
-      detailsList={detailsList}
       editing={editing}
       editingDetail={editingDetail}
       onCancel={onCancel}
       onSaveField={onSaveField}
-      setDetailsList={setDetailsList}
       setEditedValue={setEditedValue}
       setEditing={setEditing}
       setEditingDetail={setEditingDetail}
