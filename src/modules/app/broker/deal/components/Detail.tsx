@@ -30,7 +30,7 @@ const Detail = (props: DetailProps) => {
             <TextField
               className={classes.detailInput}
               variant="outlined"
-              label={key}
+              placeholder={key}
               autoComplete="off"
               size="small"
               onChange={e => setEditedValue(e.target.value)}

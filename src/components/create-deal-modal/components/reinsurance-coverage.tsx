@@ -28,7 +28,7 @@ const ReinsuranceCoverage = ({ onClose, setComponent, setTreaty, treaty }) => {
         <DialogContent>
           <FormControl component="fieldset">
             <RadioGroup aria-label="gender" name="gender1"  onChange={onSelect}>
-              <FormControlLabel value="Risks attaching" control={<Radio color="primary" />} label="Risks Attaching" />
+              <FormControlLabel value="Risks attaching during" control={<Radio color="primary" />} label="Risks Attaching During" />
               <FormControlLabel value="Losses ocurring during" control={<Radio color="primary" />} label="Losses ocurring durring" />
             </RadioGroup>
           </FormControl>          

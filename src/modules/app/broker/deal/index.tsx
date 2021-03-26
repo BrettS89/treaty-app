@@ -1,5 +1,5 @@
 import './styles.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../../../store';
 import { ActionTypes } from '../../../../store/actions';
@@ -15,6 +15,8 @@ const defaultDeal = {
   detail_ids: [],
   details: [],
   insurance_company: 'Abc Insurance',
+  insurance_type: 'TBD',
+  business_covered: 'TBD',
   executive_summary: 'Executive summary',
   additional_details: 'Additional details',
   location: ['New York', 'New Jersey'],
@@ -27,16 +29,17 @@ const Deal = (props: any) => {
   const deal = deals.myDeals.filter((deal) => deal._id === deal_id)[0];
   let dealData: DealType;
 
+  const [editing, setEditing] = useState<string>('');
+  const [editingDetail, setEditingDetail] = useState<string>('')
+  const [editedValue, setEditedValue] = useState<string | number>(null);
+  const [menuOptions, setMenuOptions] = useState<{ value: string; name: string }[]>([])
+
   if (deal) {
     dealData = {
       ...defaultDeal,
       ...deal,
     };
   }
-
-  const [editing, setEditing] = useState<string>('');
-  const [editingDetail, setEditingDetail] = useState<string>('')
-  const [editedValue, setEditedValue] = useState<string | number>(null);
 
   const onSaveField = (detail_id?: string) => {
     if (editingDetail) {
@@ -92,8 +95,47 @@ const Deal = (props: any) => {
   useEffect(() => {
     if (!deal) {
       dispatch({ type: ActionTypes.GET_MY_DEALS });
+    } else {
+      const options = [
+        { value: 'projected_premium', name: 'Projected premium' },
+        { value: 'projected_loss_ratio', name: 'Projected loss ratio' },
+        { value: 'company_retention', name: 'Company retention' },
+        { value: 'limit', name: 'Limit' },
+      ];
+
+      
+
+      if (deal.treaty_type.includes('Excess of loss')) {
+        options.push({ value: 'premium_rate', name: 'Premium rate' });
+        options.push({ value: 'reinstatement', name: 'Reinstatement' });
+      }
+
+      if (deal.treaty_type.includes('Quota share')) {
+        options.push({ value: 'ceding_percentage', name: 'Ceding percentage' });
+      }
+
+      if (deal.treaty_type.includes('Surplus')) {
+        options.push({ value: 'ceding_percentage', name: 'Ceding percentage' });
+      }
+
+      if (deal.program_business) {
+        options.push({ value: 'mga_mgu', name: 'Name of MGA/MGU' });
+      }
+
+      const details = deal.details.map(d => d.key);
+
+      const filteredOptions = options.filter(o => !details.includes(o.value));
+      const uniqueOptions: { value: string; name: string }[] = [];
+
+      filteredOptions.forEach(o => {
+        if (!uniqueOptions.find(option => option.value === o.value)) {
+          uniqueOptions.push(o);
+        }
+      });
+
+      setMenuOptions(uniqueOptions);
     }
-  }, []);
+  }, [deal]);
   
   return deal
     ? (
@@ -102,6 +144,7 @@ const Deal = (props: any) => {
       deal={dealData}
       editing={editing}
       editingDetail={editingDetail}
+      menuOptions={menuOptions}
       onCancel={onCancel}
       onSaveField={onSaveField}
       setEditedValue={setEditedValue}

@@ -11,6 +11,7 @@ import CoverageRisks from './components/reinsurance-coverage';
 import EffectiveDate from './components/effective-date';
 import ExcessTreaty from './components/excess-treaty';
 import InsuranceType from './components/insurance-type';
+import ProgramBusiness from './components/program-business';
 import Title from './components/title';
 import TreatyType from './components/type';
 
@@ -98,6 +99,16 @@ const CreateDealModal = (props: any) => {
       case components.EXCESS_TREATY:
         return (
           <ExcessTreaty
+            onClose={onClose}
+            setComponent={setComponent}
+            setTreaty={setTreaty}
+            treaty={treaty}
+          />
+        );
+
+      case components.PROGRAM_BUSINESS:
+        return (
+          <ProgramBusiness
             onClose={onClose}
             setComponent={setComponent}
             setTreaty={setTreaty}

@@ -7,11 +7,13 @@ export interface Deal extends Partial<Resource> {
   user_id: string;
   treaty_type: string[];
   insurance_type: string[];
+  business_covered?: string;
   effective_date: string;
   contract_term: string;
   reinsurance_coverage: string;
   excess_treaty: boolean;
   admitted: string[];
+  program_business: boolean;
   title?: string;
   insurance_company?: string;
   detail_ids: string[];

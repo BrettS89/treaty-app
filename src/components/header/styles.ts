@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   appBar: {
+    // height: 0
   },
   logo: {
     paddingTop: 2,

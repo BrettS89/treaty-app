@@ -1,15 +1,16 @@
 import { Button,  FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select,TextField, Typography } from '@material-ui/core';
-import FolderIcon from '@material-ui/icons/Folder';
-import FiberManualRecordRoundedIcon from '@material-ui/icons/FiberManualRecordRounded';
 import { Deal } from '../../../../types/services/insurance';
 import useStyles from './styles';
 import Detail from './components/Detail';
+import TreatyDetails from './components/treaty-details';
+import { select } from '@redux-saga/core/effects';
 
 interface DealViewProps {
   addDetail(arg: any): void;
   deal: Deal;
   editing: string;
   editingDetail: string;
+  menuOptions: { value: string; name: string }[];
   onCancel(): void;
   onSaveField(str?: string): void;
   setEditedValue(inpt: string | number): void;
@@ -18,7 +19,7 @@ interface DealViewProps {
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, editing, editingDetail, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail } = props;
+  const { addDetail, deal, editing, editingDetail, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -67,7 +68,7 @@ const View = (props: DealViewProps) => {
   const renderCompanyName = () => {
     if (editing === 'insurance_company') {
       return (
-        <div className="Deal-row Deal-title">
+        <div className="Deal-row Deal-title-less-margin">
           <div className="Deal-row">
             <Typography variant="h6" className="title">
               Insurance company:
@@ -76,7 +77,115 @@ const View = (props: DealViewProps) => {
               className={classes.detailInput}
               size="small"
               variant="outlined"
-              label="Insurance company name"
+              placeholder="Insurance company name"
+              autoComplete="off"
+              onChange={e => setEditedValue(e.target.value)}
+            />
+          </div>
+          <Button
+            className={classes.leftMargin}
+            onClick={onCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => onSaveField()}
+          >
+            Save
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="Deal-row Deal-title-less-margin">
+        <div className="Deal-row">
+          <Typography variant="h6" className="title">
+            Insurance company:
+          </Typography>
+          <Typography className={classes.leftMargin}>
+            {deal.insurance_company}
+          </Typography>
+        </div>
+        <Button
+          className={classes.leftMargin}
+          color="primary"
+          onClick={() => setEditing('insurance_company')}
+        >
+          Edit
+        </Button>
+      </div>
+    );
+  };
+
+  const renderInsuranceType = () => {
+    if (editing === 'insurance_type') {
+      return (
+        <div className="Deal-row Deal-title-less-margin">
+          <div className="Deal-row">
+            <Typography variant="h6" className="title">
+              Insurance type:
+            </Typography>
+            <TextField
+              className={classes.detailInput}
+              size="small"
+              variant="outlined"
+              label="Insurance type"
+              autoComplete="off"
+              onChange={e => setEditedValue(e.target.value)}
+            />
+          </div>
+          <Button
+            className={classes.leftMargin}
+            onClick={onCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => onSaveField()}
+          >
+            Save
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <div className="Deal-row Deal-title-less-margin">
+        <div className="Deal-row">
+          <Typography variant="h6" className="title">
+            Insurance type:
+          </Typography>
+          <Typography className={classes.leftMargin}>
+            {deal.insurance_type.join(', ')}
+          </Typography>
+        </div>
+        <Button
+          className={classes.leftMargin}
+          color="primary"
+          onClick={() => setEditing('insurance_type')}
+        >
+          Edit
+        </Button>
+      </div>
+    );
+  };
+
+  const renderBusinessCovered = () => {
+    if (editing === 'business_covered') {
+      return (
+        <div className="Deal-row Deal-title">
+          <div className="Deal-row">
+            <Typography variant="h6" className="title">
+              Business covered:
+            </Typography>
+            <TextField
+              className={classes.detailInput}
+              size="small"
+              variant="outlined"
+              label="Business covered"
               autoComplete="off"
               onChange={e => setEditedValue(e.target.value)}
             />
@@ -101,22 +210,22 @@ const View = (props: DealViewProps) => {
       <div className="Deal-row Deal-title">
         <div className="Deal-row">
           <Typography variant="h6" className="title">
-            Insurance company:
+            Business covered:
           </Typography>
           <Typography className={classes.leftMargin}>
-            {deal.insurance_company}
+            {deal.business_covered}
           </Typography>
         </div>
         <Button
           className={classes.leftMargin}
           color="primary"
-          onClick={() => setEditing('insurance_company')}
+          onClick={() => setEditing('business_covered')}
         >
           Edit
         </Button>
       </div>
-    )
-  }
+    );
+  };
 
   const renderDetails = (): JSX.Element[] => 
     deal.details.map((detail) => (
@@ -244,83 +353,13 @@ const View = (props: DealViewProps) => {
   return (
     <div className="Deal">
       {renderTitle()}
+      {renderCompanyName()}
+      {renderInsuranceType()}
+      {renderBusinessCovered()}
 
-      <div>
-        {renderCompanyName()}
-      </div>
-
-      <div className={classes.treatyType}>
-        <Typography variant="h6" className="title">
-          Treaty Details
-        </Typography>
-
-        <div>
-          <List dense={false}>
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={deal.treaty_type.join(', ')}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={deal.insurance_type.join(', ')}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={`Effective date: ${deal.effective_date}`}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={`Term: ${deal.contract_term}`}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={deal.reinsurance_coverage}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={`Excess Treaty: ${deal.excess_treaty ? 'Yes' : 'No'}`}
-              />
-            </ListItem>
-
-            <ListItem className={classes.bullet}>
-              <ListItemIcon>
-                <FiberManualRecordRoundedIcon color="primary" style={{ fontSize: 14 }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={deal.admitted.join(', ')}
-              />
-            </ListItem>
-          </List>
-        </div>
-      </div>
+      <TreatyDetails
+        deal={deal}
+      />
 
       <div className="Deal-details title">
         <Typography variant="h6" className={classes.detailsSectionTitle}>
@@ -332,17 +371,12 @@ const View = (props: DealViewProps) => {
             <InputLabel id="demo-simple-select-label">Add details</InputLabel>
             <Select
               labelId="demo-simple-select-label"
+              displayEmpty
               id="demo-simple-select"
               onChange={addDetail}
               label="Add details"
             >
-              <MenuItem value="projected_gross_premium">Projected gross premium</MenuItem>
-              <MenuItem value="projected_gross_premium">Projected net premium</MenuItem>
-              <MenuItem value="projected_loss_ratio">Projected loss ratio</MenuItem>
-              <MenuItem value="business_covered">Business covered</MenuItem>
-              <MenuItem value="limit">Limit</MenuItem>
-              <MenuItem value="cede">Cede</MenuItem>
-              <MenuItem value="mga">MGA</MenuItem>
+              {menuOptions.map(m => <MenuItem value={m.value}>{m.name}</MenuItem>)}
             </Select>
           </FormControl>
         </div>

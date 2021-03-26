@@ -33,8 +33,8 @@ const Type = ({ onClose, setComponent, setTreaty, treaty }) => {
             <FormHelperText>Select all that apply</FormHelperText>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox color="primary" className={classes.checkbox} checked={selected.includes('Proportional')} onChange={onSelect} name="Proportional" />}
-                label="Proportional"
+                control={<Checkbox color="primary" className={classes.checkbox} checked={selected.includes('Quota share')} onChange={onSelect} name="Quota share" />}
+                label="Quota share"
               />
               <FormControlLabel
                 control={<Checkbox color="primary" className={classes.checkbox} checked={selected.includes('Excess of loss')} onChange={onSelect} name="Excess of loss" />}

@@ -14,7 +14,9 @@ function App() {
         <Header />
         <div className="App-main">
           <Sidebar />
-          <Router />
+          <div style={{ flexGrow: 1, display: 'flex', marginTop: 64 }}>
+            <Router />
+          </div>
           <ErrorMessage />
           <CreateDealModal />
         </div>

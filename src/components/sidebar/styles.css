@@ -1,8 +1,9 @@
 .Sidebar {
   min-width: 220px;
-  height: 100%;
+  max-height: 100%!important;
   border-right: 1px solid #E0E0E0;
   display: flex;
+  padding-top: 64px;
   flex-direction: column;
   justify-content: space-between;
 }

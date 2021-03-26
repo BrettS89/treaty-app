@@ -1,25 +1,30 @@
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   leftMargin: {
     marginLeft: 10,
   },
   titleInput: {
     width: 600,
-    height: 41,
   },
   treatyType: {
     padding: 15,
     paddingRight: 40,
     backgroundColor: '#F6F7FB',
-    // width: '40%',
+    borderWidth: 5,
+    borderColor: 'blue',
     width: 'auto',
     display: 'inline-flex',
     flexDirection: 'column'
   },
   bullet: {
     paddingTop: 1,
-    paddingBottom: 1
+    paddingBottom: 1,
+  },
+  bulletKey: {
+    fontWeight: 600,
+    marginRight: 15,
+    color: '#069CEC',
   },
   dropdown: {
     width: 200,
@@ -41,13 +46,13 @@ const useStyles = makeStyles({
   detailInput: {
     width: 250,
     padding: 0,
-    height: 35,
+    // height: 30,
     marginLeft: 5,
   },
   checkbox: {
     paddingTop: 4,
     paddingBottom: 4,
   }
-});
+}));
 
 export default useStyles;
