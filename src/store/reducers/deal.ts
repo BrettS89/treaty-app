@@ -4,11 +4,13 @@ import { Deal } from '../../types/services/insurance';
 export interface DealState {
   myDeals: Deal[];
   accessibleDeals: Deal[];
+  dealsFollowing: Deal[];
 };
 
 const INITIAL_STATE = {
   myDeals: [],
   accessibleDeals: [],
+  dealsFollowing: [],
 };
 
 const dealReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -23,6 +25,12 @@ const dealReducer = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         accessibleDeals: payload,
+      };
+
+    case ActionTypes.SET_DEALS_FOLLOWING:
+      return {
+        ...state,
+        dealsFollowing: payload,
       };
 
     default:

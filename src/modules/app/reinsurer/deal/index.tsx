@@ -1,18 +1,27 @@
 import './styles.css';
+import authorization from '../../../../components/authorization';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../../../store';
 import { ActionTypes } from '../../../../store/actions';
 import { Deal as DealType, Detail as DetailType } from '../../../../types/services/insurance';
-
 import View from './view';
 
 const ReDeal = (props: any) => {
   const deal_id = props.match.params.id;
   const dispatch = useDispatch();
   const user = useSelector((state: StoreState) => state.user);
-  let deal = useSelector((state: StoreState) => state.deal.accessibleDeals)
-    .filter(deal => deal._id === deal_id)[0];
+  const dealState = useSelector((state: StoreState) => state.deal);
+  const isFollowing = !!dealState.dealsFollowing.find(d => d._id === deal_id)
+  let deal = dealState.accessibleDeals.filter(deal => deal._id === deal_id)[0];
+
+  const followDeal = (): void => {
+    dispatch({ type: ActionTypes.FOLLOW_DEAL, payload: deal._id });
+  };
+
+  const unFollowDeal = () => {
+    dispatch({ type: ActionTypes.UNFOLLOW_DEAL, payload: deal._id });
+  };
 
   useEffect(() => {
     if (!deal) {
@@ -27,9 +36,12 @@ const ReDeal = (props: any) => {
     ? (
       <View
         deal={deal}
+        followDeal={followDeal}
+        isFollowing={isFollowing}
+        unFollowDeal={unFollowDeal}
       />
     )
     : <div>Loading...</div>
 };
 
-export default ReDeal;
+export default authorization(ReDeal);

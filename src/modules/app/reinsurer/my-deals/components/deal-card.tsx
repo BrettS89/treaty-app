@@ -25,7 +25,7 @@ const DealCard = (props: ReDealCardProps) => {
   return (
     <div className="ReDealCard">
       <div className="ReDealCard-left">
-        <Avatar>
+        <Avatar style={{ backgroundColor: "#50c878" }}>
           <LibraryBooksRoundedIcon style={{ fontSize: 20 }} />
         </Avatar>
 

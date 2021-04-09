@@ -3,3 +3,42 @@
   padding: 20px;
   width: 100%;
 }
+
+.ReDeal-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px!important;
+}
+
+.ReDeal-title {
+  margin-right: 20px!important;
+}
+
+.ReDeal-main {
+  display: flex;
+  justify-content: space-between;
+  height: 88%;
+}
+
+.ReDeal-content {
+  background-color: #fff;
+  height: 100%;
+  width: 50%;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  overflow-y: scroll;
+}
+
+.ReDeal-insurance-overview {
+  margin-bottom: 10px;
+}
+
+.ReDeal-insurance-overview-left {
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.ReDeal-content-summary {
+  margin-bottom: 20px;
+}

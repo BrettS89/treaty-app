@@ -1,25 +1,29 @@
 import { Button,  FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select,TextField, Typography } from '@material-ui/core';
 import { Deal } from '../../../../types/services/insurance';
 import useStyles from './styles';
-import Detail from './components/Detail';
+import RightNav from './components/right-nav';
 import TreatyDetails from './components/treaty-details';
-import { select } from '@redux-saga/core/effects';
+
+import DetailSection from './components/detail-section';
 
 interface DealViewProps {
   addDetail(arg: any): void;
   deal: Deal;
   editing: string;
   editingDetail: string;
+  expensesOptions: { value: string; name: string }[];
   menuOptions: { value: string; name: string }[];
   onCancel(): void;
   onSaveField(str?: string): void;
   setEditedValue(inpt: string | number): void;
   setEditing(str: string): void; 
   setEditingDetail(str: string): void
+  setSideComponent(str: string): void;
+  sideComponent: string;
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, editing, editingDetail, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail } = props;
+  const { addDetail, deal, editing, editingDetail, expensesOptions, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -227,17 +231,6 @@ const View = (props: DealViewProps) => {
     );
   };
 
-  const renderDetails = (): JSX.Element[] => 
-    deal.details.map((detail) => (
-      <Detail
-        detail={detail}
-        editingDetail={editingDetail}
-        onSaveField={onSaveField}
-        setEditingDetail={setEditingDetail}  
-        setEditedValue={setEditedValue}
-      />
-    ));
-
   const renderAdditionalDetails = () => {
     if (editing === 'additional_details') {
       return (
@@ -350,42 +343,139 @@ const View = (props: DealViewProps) => {
     );
   };
 
+  const renderRightPanel = () => {
+    switch(sideComponent) {
+      case 'TreatyInformation':
+        return (
+          <DetailSection
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={menuOptions}
+            onSaveField={onSaveField}
+            section="treatyInformation"
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+            title="Treaty Information"
+          />
+        );
+
+      case 'GeneralTerms':
+        return (
+          <DetailSection
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={menuOptions}
+            onSaveField={onSaveField}
+            section="generalTerms"
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+            title="General Terms"
+          />
+        );
+
+        case 'Expenses':
+          return (
+            <DetailSection
+              addDetail={addDetail}
+              deal={deal}
+              editingDetail={editingDetail}
+              menuOptions={expensesOptions}
+              onSaveField={onSaveField}
+              section="expenses"
+              setEditingDetail={setEditingDetail}
+              setEditedValue={setEditedValue}
+              title="Expenses"
+            />
+          )
+
+      default:
+        return (
+          <DetailSection
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={expensesOptions}
+            onSaveField={onSaveField}
+            section="treatyInformation"
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+            title="Treaty Information"
+          />
+        );
+    }
+  }
+
   return (
     <div className="Deal">
       {renderTitle()}
-      {renderCompanyName()}
-      {renderInsuranceType()}
-      {renderBusinessCovered()}
+      <div className="Deal-content">
+        <div className="Deal-left">
+          {renderCompanyName()}
+          {renderInsuranceType()}
+          {renderBusinessCovered()}
 
-      <TreatyDetails
-        deal={deal}
-      />
+          <TreatyDetails
+            deal={deal}
+          />
 
-      <div className="Deal-details title">
-        <Typography variant="h6" className={classes.detailsSectionTitle}>
-          Treaty Information
-        </Typography>
-
-        <div>
-          <FormControl className={classes.dropdown} variant="outlined" size="small">
-            <InputLabel id="demo-simple-select-label">Add details</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              displayEmpty
-              id="demo-simple-select"
-              onChange={addDetail}
-              label="Add details"
-            >
-              {menuOptions.map(m => <MenuItem value={m.value}>{m.name}</MenuItem>)}
-            </Select>
-          </FormControl>
-        </div>
           
-        {renderDetails()}
-      </div>
+          {renderExecutiveSummary()}
+          {renderAdditionalDetails()}
+          
+        </div>
 
-      {renderAdditionalDetails()}
-      {renderExecutiveSummary()}
+        <div className="Deal-right">
+
+          <RightNav
+            component={sideComponent}
+            setSideComponent={setSideComponent}
+          />
+          {/* <div className="Deal-right-nav">
+            <div className="Deal-right-nav-link">
+              <Typography color="primary" className={classes.rightNavLink}>Treaty Information</Typography>
+            </div>
+
+            <div className="Deal-right-nav-link">
+              <Typography className={classes.rightNavLink}>General Terms</Typography>
+            </div>
+
+            <div className="Deal-right-nav-link">
+              <Typography className={classes.rightNavLink}>Expenses</Typography>
+            </div>
+
+            <div className="Deal-right-nav-link">
+              <Typography className={classes.rightNavLink}>Files</Typography>
+            </div>
+          </div> */}
+
+          {renderRightPanel()}
+
+          {/* <TreatyInformation
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={menuOptions}
+            onSaveField={onSaveField}
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+          />
+
+          <GeneralTerms
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={menuOptions}
+            onSaveField={onSaveField}
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+          /> */}
+
+
+
+        </div>
+      </div>
     </div>
   );
 };

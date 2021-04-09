@@ -39,3 +39,11 @@ code {
 .title {
   font-weight: 600!important;
 }
+
+.MuiMenuItem-root {
+  background-color: #fff!important;
+}
+
+.MuiMenuItem-root:hover{
+  background-color: #F5F5F5!important;
+}

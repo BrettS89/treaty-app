@@ -7,12 +7,13 @@ const useStyles = makeStyles(theme => ({
   titleInput: {
     width: 600,
   },
+  rightNavLink: {
+    fontWeight: 600
+  },
   treatyType: {
     padding: 15,
     paddingRight: 40,
     backgroundColor: '#F6F7FB',
-    borderWidth: 5,
-    borderColor: 'blue',
     width: 'auto',
     display: 'inline-flex',
     flexDirection: 'column'

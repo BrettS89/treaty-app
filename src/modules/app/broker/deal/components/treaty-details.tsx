@@ -11,7 +11,7 @@ const TreatyDetails: React.FC<TreatyDetailsProps> = ({ deal }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.treatyType}>
+    <div className="Deal-treaty-type">
       <Typography variant="h6" className="title">
         Treaty Details
       </Typography>

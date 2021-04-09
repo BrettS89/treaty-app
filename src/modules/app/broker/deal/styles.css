@@ -5,6 +5,33 @@
   overflow: scroll!important;
 }
 
+.Deal-content {
+  display: flex;
+}
+
+.Deal-left {
+  width: 45%;
+  margin-right: 5%;
+}
+
+.Deal-right {
+  width: 50%;
+}
+
+.Deal-right-nav {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.Deal-right-nav-link {
+  margin-right: 30px;
+  color: grey;
+}
+
+.Deal-right-nav-link:hover {
+  cursor: pointer;
+}
+
 .Deal-row {
   display: flex;
   align-items: center;
@@ -16,7 +43,7 @@
 }
 
 .Deal-title-less-margin {
-  margin-bottom: 4px;
+  height: 35px;
 }
 
 .Deal-detail {
@@ -31,8 +58,19 @@
   display: flex;
 }
 
+.Deal-treaty-type {
+  padding: 15px;
+  padding-right: 40px;
+  background-color: #F6F7FB;
+  width: auto;
+  display: inline-flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
 .Deal-details {
-  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .Detail {

@@ -19,6 +19,7 @@ import ReDeal from '../modules/app/reinsurer/deal';
 export default () => {
   return (
     <Switch>
+      <Route exact path="/app/reinsurer/my-deals/:id" component={ReDeal} />
       <Route exact path="/app/reinsurer/search-deals/:id" component={ReDeal} />
       <Route exact path="/app/reinsurer/search-deals" component={SearchDeals} />
       <Route exact path="/app/reinsurer/my-deals" component={reinsurerDeals} />

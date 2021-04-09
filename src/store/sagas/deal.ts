@@ -4,14 +4,17 @@ import {
 import { dealSelector, userSelector } from '../selectors';
 import { ActionTypes } from '../actions';
 import app from '../../feathers';
-import _ from 'lodash';
+import _, { update } from 'lodash';
 
 export default [
   createDealWatcher,
   brokerGetMyDealsWatcher,
   editDealWatcher,
   editDetailWatcher,
-  searchDealWatcher
+  searchDealWatcher,
+  getDealsFollowingWatcher,
+  followDealWatcher,
+  unfollowDealWatcher,
 ];
 
 function * createDealWatcher() {
@@ -34,6 +37,18 @@ function * searchDealWatcher() {
   yield takeLatest(ActionTypes.SEARCH_DEALS, searchDealsHandler);
 }
 
+function * getDealsFollowingWatcher() {
+  yield takeLatest(ActionTypes.GET_DEALS_FOLLOWING, getDealsFollowingHandler);
+}
+
+function * followDealWatcher() {
+  yield takeLatest(ActionTypes.FOLLOW_DEAL, followDealHandler);
+}
+
+function * unfollowDealWatcher() {
+  yield takeLatest(ActionTypes.UNFOLLOW_DEAL, unfollowDealHandler);
+}
+
 interface CreateDealHandlerProps { 
   payload: { 
     data: {
@@ -42,11 +57,12 @@ interface CreateDealHandlerProps {
       title: string ;
     },
     navigate(path: string): void;
+    setComponent(): void;
   },
   type: string,
 }
 
-function * createDealHandler({ payload: { data, navigate } }: CreateDealHandlerProps) {
+function * createDealHandler({ payload: { data, navigate, setComponent } }: CreateDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
     const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true } }})
@@ -57,6 +73,7 @@ function * createDealHandler({ payload: { data, navigate } }: CreateDealHandlerP
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: newMyDeals });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
     yield put({ type: ActionTypes.TOGGLE_DEAL_MODAL, payload: false });
+    setComponent();
     navigate('/app/broker/my-deals/' + deal._id);
   } catch(e) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
@@ -178,6 +195,80 @@ function * searchDealsHandler({ payload: { account_id } }: SearchDealsProps) {
     const deals = yield call(fn);
     const dealState = yield select(dealSelector);
     yield put({ type: ActionTypes.SET_ACCESSIBLE_DEALS, payload: [...dealState.accessibleDeals, ...deals.data] });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  }
+}
+
+interface GetDealsFollowingProps {
+  type: string;
+  payload: {
+    user_id: string;
+  }
+}
+
+function * getDealsFollowingHandler({ payload: { user_id } }: GetDealsFollowingProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const query = {
+      query: {
+        user_id,
+        $resolve: { deal: true },
+        $sort: { createdAt: -1 },
+      },
+    };
+    const fn = () => app.service('insurance/following').find(query);
+    const deals = yield call(fn);
+    const dealState = yield select(dealSelector);
+    yield put({ type: ActionTypes.SET_DEALS_FOLLOWING, payload: [...dealState.dealsFollowing, ...deals.data] });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  }
+}
+
+interface FollowDealHandlerProps {
+  type: string;
+  payload: string;
+}
+
+function * followDealHandler({ payload }: FollowDealHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const fn = () => app.service('insurance/following').create({
+      deal_id: payload,
+    });
+    yield call(fn);
+    const dealState = yield select(dealSelector);
+    const deal = dealState.accessibleDeals.find(d => d._id === payload);
+    const updatedFollowing = [...dealState.dealsFollowing, deal];
+    yield put({ type: ActionTypes.SET_DEALS_FOLLOWING, payload: updatedFollowing });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  }
+}
+
+interface UnfollowDealHandlerProps {
+  type: string;
+  payload: string;
+}
+
+function * unfollowDealHandler({ payload }: UnfollowDealHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const user = yield select(userSelector);
+    const followingFn = () => app.service('insurance/following').find({
+      user_id: user._id,
+      deal_id: payload,
+    });
+    const { data } = yield call(followingFn);
+    const fn = () => app.service('insurance/following').remove(data[0]._id);
+    yield call(fn);
+    const dealState = yield select(dealSelector);
+    const updatedFollowing = dealState.dealsFollowing.filter(d => d._id !== payload);
+    yield put({ type: ActionTypes.SET_DEALS_FOLLOWING, payload: updatedFollowing });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch(e) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });

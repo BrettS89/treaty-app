@@ -1,0 +1,84 @@
+{
+  "treatyInformation": {
+    "general": [
+      { "value": "projected_premium", "name": "Projected premium" },
+      { "value": "company_retention", "name": "Company retention" },
+      { "value": "limit", "name": "Limit" },
+      { "value": "total_insured_value", "name": "Projected premium" },
+      { "value": "projected_loss_ratio", "name": "Projected loss ratio" }
+    ],
+    "xol": [
+      { "value": "reinsurance_rate", "name": "Reinsurance rate" },
+      { "value": "reinstatement", "name": "Reinstatement" }
+    ],
+    "surplus": [
+      { "value": "company_retention", "name": "Ceding percentage" },
+      { "value": "surplus_retention", "name": "Surplus retention" },
+      { "value": "surplus_reinsured_proportion_percentage", "name": "Surplus reinsured proportion or percentage" },
+      { "value": "surplus_insured_value", "name": "Surplus insured value" }
+    ],
+    "quotaShare": [
+      { "value": "ceding_comission", "name": "Ceding comission" }
+    ],
+    "programBusiness": [
+      { "value": "mga_commision", "name": "MGA comission" },
+      { "value": "carrier_retention", "name": "Carrier retention" },
+      { "value": "mga_retention", "name": "MGA retention" },
+      { "value": "mga_mgu", "name": "Name of MGA/MGU" }
+    ],
+    "property": []
+  },
+  "generalTerms": {
+    "general": [
+      { "value": "existing_incumbent_markets", "name": "Existing/Incumbet markets" },
+      { "value": "prior_year_premium", "name": "Prior year premium" },
+      { "value": "agg_limit", "name": "Agg limit" },
+      { "value": "prior_year_loss_ratio", "name": "Prior year loss ratio" },
+      { "value": "combined_ratio", "name": "Combined ratio" },
+      { "value": "prior_year_combined_ratio", "name": "Prior year combined ratio" },
+      { "value": "insurer_retention_percentage", "name": "Insurer retention percentage" },
+      { "value": "loss_corridor", "name": "Loss corridor" },
+      { "value": "underlying_rate_increase", "name": "Underlying rate increase" },
+      { "value": "treaty_attachment_point", "name": "Treaty attachment point" }
+    ],
+    "xol": [
+
+    ],
+    "surplus": [
+
+    ],
+    "quotaShare": [
+
+    ],
+    "programBusiness": [
+
+    ],
+    "property": [
+      { "value": "event_cap", "name": "Event cap" },
+      { "value": "loss_occurrence", "name": "Loss occurrence" }
+    ]
+  },
+  "expenses": {
+    "general": [
+      { "value": "loss_adjustment_expense", "name": "Loss adjustment expense" },
+      { "value": "eco/xpl", "name": "ECO/XPL" },
+      { "value": "profit_comission", "name": "Profit comission" },
+      { "value": "tpa_expense", "name": "TPA expense" },
+      { "value": "other_admin_expense", "name": "Other admin expense" },
+      { "value": "unallocated_expense", "name": "Unallocated expense" } 
+    ],
+    "xol": [
+
+    ],
+    "surplus": [
+
+    ],
+    "quotaShare": [
+
+    ],
+    "programBusiness": [
+
+    ],
+    "property": []
+  }
+}

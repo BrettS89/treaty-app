@@ -30,7 +30,6 @@ const CreateDealModal = (props: any) => {
   };
 
   const createDeal = (): void => {
-    console.log('inn');
     dispatch({
       type: ActionTypes.CREATE_DEAL,
       payload: {
@@ -40,6 +39,7 @@ const CreateDealModal = (props: any) => {
           ...treaty,
         },
         navigate: props.history.push,
+        setComponent: () => setComponent(components.TREATY_TYPE),
       },
     });
   };

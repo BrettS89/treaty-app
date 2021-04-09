@@ -19,9 +19,6 @@ const DealCard = (props: DealCardProps) => {
         <Avatar style={{ backgroundColor: "#50c878" }}>
           <LibraryBooksRoundedIcon style={{ fontSize: 20 }} />
         </Avatar>
-        {/* <Avatar style={{ backgroundColor: "#EC5606" }}>
-          <LibraryBooksOutlinedIcon style={{ fontSize: 20 }} />
-        </Avatar> */}
         <Typography
           className={classes.dealTitle}
         >
