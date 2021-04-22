@@ -1,19 +1,24 @@
 import { Button, Typography } from '@material-ui/core';
 import { Deal as DealType, Detail as DetailType } from '../../../../types/services/insurance';
 import useStyles from './styles';
+import TreatyDetails from '../../broker/deal/components/treaty-details';
+import RightNav from '../../broker/deal/components/right-nav';
+import Details from './components/detail';
 
 interface ReDealProps {
   deal: DealType;
   followDeal(): void;
   isFollowing: boolean;
+  rightComponent: string;
+  setRightComponent(str: string): void;
   unFollowDeal(): void;
 }
 
 const View = (props: ReDealProps) => {
-  const { deal, followDeal, isFollowing, unFollowDeal } = props;
+  const { deal, followDeal, isFollowing, rightComponent, setRightComponent, unFollowDeal } = props;
   const classes = useStyles();
 
-  const renderFollowing = () => {
+  const renderFollowing = (): JSX.Element => {
     if (isFollowing) {
       return (
         <Button
@@ -35,7 +40,47 @@ const View = (props: ReDealProps) => {
         Follow
       </Button>
     );
-  }
+  };
+
+  const renderRightComponent = (): JSX.Element => {
+    switch(rightComponent) {
+      case 'TreatyInformation':
+        return (
+          <Details
+            deal={deal}
+            title="Treaty Information"
+            section="treatyInformation"
+          />
+        );
+
+      case 'GeneralTerms':
+        return (
+          <Details
+            deal={deal}
+            title="General Terms"
+            section="generalTerms"
+          />
+        );
+
+      case 'Expenses':
+        return (
+          <Details
+            deal={deal}
+            title="Expenses"
+            section="expenses"
+          />
+        );
+
+      default:
+        return (
+          <Details
+            deal={deal}
+            title="Treaty Information"
+            section="treatyInformation"
+          />
+        );
+    }
+  };
 
   return (
     <div className="ReDeal">
@@ -62,9 +107,12 @@ const View = (props: ReDealProps) => {
             <span className="ReDeal-insurance-overview-left">Business Covered:</span>
             <span>{deal.business_covered}</span>
           </div>
-        </div>
 
-        <div className="ReDeal-content" style={{ marginLeft: 10 }}>
+          <div className="ReDeal-treaty-info">
+            <TreatyDetails deal={deal} />
+          </div>
+          
+
           <div className="ReDeal-content-summary">
             <Typography className={classes.summaryTitles}>
               Executive Summary
@@ -82,6 +130,15 @@ const View = (props: ReDealProps) => {
               {deal.additional_details}
             </div>
           </div>
+
+        </div>
+
+        <div className="ReDeal-content" style={{ marginLeft: 10 }}>
+          <RightNav
+            component={rightComponent}
+            setSideComponent={setRightComponent}
+          />
+          {renderRightComponent()}
         </div>
 
       </div>

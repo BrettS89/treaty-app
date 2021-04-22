@@ -9,6 +9,7 @@ import MyDeals from '../modules/app/broker/my-deals';
 import Markets from '../modules/app/broker/markets';
 import CreateDeal from '../modules/app/broker/create-deal';
 import Deal from '../modules/app/broker/deal';
+import Manage from '../modules/app/broker/manage';
 
 // reinsurer components
 import reinsurerDashboard from '../modules/app/reinsurer/dashboard';
@@ -25,6 +26,7 @@ export default () => {
       <Route exact path="/app/reinsurer/my-deals" component={reinsurerDeals} />
       <Route exact path="/app/reinsurer/dashboard" component={reinsurerDashboard} />
       
+      <Route exact path="/app/broker/manage/:id" component={Manage} />
       <Route exact path="/app/broker/my-deals/:id" component={Deal} />
       <Route exact path="/app/broker/create-deal" component={CreateDeal} />
       <Route exact path="/app/broker/markets" component={Markets} />

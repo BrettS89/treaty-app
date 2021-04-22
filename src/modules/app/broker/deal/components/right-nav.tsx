@@ -31,6 +31,10 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent }) => {
         <Typography style={{ color: setColor('Expenses') }} className={classes.rightNavLink}>Expenses</Typography>
       </div>
 
+      <div className="Deal-right-nav-link" onClick={() => setSideComponent('Territory')}>
+        <Typography style={{ color: setColor('Territory') }} className={classes.rightNavLink}>Territory</Typography>
+      </div>
+
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('TreatyInformation')}>
         <Typography className={classes.rightNavLink}>Files</Typography>
       </div>

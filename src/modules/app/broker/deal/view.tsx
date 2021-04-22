@@ -1,10 +1,10 @@
-import { Button,  FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select,TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography } from '@material-ui/core';
 import { Deal } from '../../../../types/services/insurance';
 import useStyles from './styles';
 import RightNav from './components/right-nav';
 import TreatyDetails from './components/treaty-details';
-
 import DetailSection from './components/detail-section';
+import Territory from './components/territory';
 
 interface DealViewProps {
   addDetail(arg: any): void;
@@ -12,6 +12,7 @@ interface DealViewProps {
   editing: string;
   editingDetail: string;
   expensesOptions: { value: string; name: string }[];
+  generalTermsOptions: { value: string; name: string }[];
   menuOptions: { value: string; name: string }[];
   onCancel(): void;
   onSaveField(str?: string): void;
@@ -20,10 +21,11 @@ interface DealViewProps {
   setEditingDetail(str: string): void
   setSideComponent(str: string): void;
   sideComponent: string;
+  updateTerritory: any
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, editing, editingDetail, expensesOptions, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent } = props;
+  const { addDetail, deal, editing, editingDetail, expensesOptions, generalTermsOptions, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent, updateTerritory } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -366,7 +368,7 @@ const View = (props: DealViewProps) => {
             addDetail={addDetail}
             deal={deal}
             editingDetail={editingDetail}
-            menuOptions={menuOptions}
+            menuOptions={generalTermsOptions}
             onSaveField={onSaveField}
             section="generalTerms"
             setEditingDetail={setEditingDetail}
@@ -375,20 +377,28 @@ const View = (props: DealViewProps) => {
           />
         );
 
-        case 'Expenses':
-          return (
-            <DetailSection
-              addDetail={addDetail}
-              deal={deal}
-              editingDetail={editingDetail}
-              menuOptions={expensesOptions}
-              onSaveField={onSaveField}
-              section="expenses"
-              setEditingDetail={setEditingDetail}
-              setEditedValue={setEditedValue}
-              title="Expenses"
-            />
-          )
+      case 'Expenses':
+        return (
+          <DetailSection
+            addDetail={addDetail}
+            deal={deal}
+            editingDetail={editingDetail}
+            menuOptions={expensesOptions}
+            onSaveField={onSaveField}
+            section="expenses"
+            setEditingDetail={setEditingDetail}
+            setEditedValue={setEditedValue}
+            title="Expenses"
+          />
+        );
+
+      case 'Territory':
+        return (
+          <Territory
+            deal={deal}
+            updateTerritory={updateTerritory}
+          />
+        );
 
       default:
         return (
@@ -420,60 +430,18 @@ const View = (props: DealViewProps) => {
             deal={deal}
           />
 
-          
           {renderExecutiveSummary()}
           {renderAdditionalDetails()}
           
         </div>
 
         <div className="Deal-right">
-
           <RightNav
             component={sideComponent}
             setSideComponent={setSideComponent}
           />
-          {/* <div className="Deal-right-nav">
-            <div className="Deal-right-nav-link">
-              <Typography color="primary" className={classes.rightNavLink}>Treaty Information</Typography>
-            </div>
-
-            <div className="Deal-right-nav-link">
-              <Typography className={classes.rightNavLink}>General Terms</Typography>
-            </div>
-
-            <div className="Deal-right-nav-link">
-              <Typography className={classes.rightNavLink}>Expenses</Typography>
-            </div>
-
-            <div className="Deal-right-nav-link">
-              <Typography className={classes.rightNavLink}>Files</Typography>
-            </div>
-          </div> */}
 
           {renderRightPanel()}
-
-          {/* <TreatyInformation
-            addDetail={addDetail}
-            deal={deal}
-            editingDetail={editingDetail}
-            menuOptions={menuOptions}
-            onSaveField={onSaveField}
-            setEditingDetail={setEditingDetail}
-            setEditedValue={setEditedValue}
-          />
-
-          <GeneralTerms
-            addDetail={addDetail}
-            deal={deal}
-            editingDetail={editingDetail}
-            menuOptions={menuOptions}
-            onSaveField={onSaveField}
-            setEditingDetail={setEditingDetail}
-            setEditedValue={setEditedValue}
-          /> */}
-
-
-
         </div>
       </div>
     </div>

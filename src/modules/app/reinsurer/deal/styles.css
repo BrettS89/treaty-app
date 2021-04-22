@@ -42,3 +42,18 @@
 .ReDeal-content-summary {
   margin-bottom: 20px;
 }
+
+.ReDeal-treaty-info {
+  margin: 30px 0;
+}
+
+.ReDeal-details {
+  width: 500px;
+}
+
+.ReDeal-details-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+}

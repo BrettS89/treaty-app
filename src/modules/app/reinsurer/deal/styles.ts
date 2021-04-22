@@ -7,6 +7,13 @@ const useStyles = makeStyles({
   summaryTitles: {
     fontWeight: 600,
     marginBottom: 10,
+  },
+  detailsSectionTitle: {
+    marginBottom: 10,
+    fontWeight: 600
+  },
+  detailsSectionKey: {
+    fontWeight: 600
   }
 });
 

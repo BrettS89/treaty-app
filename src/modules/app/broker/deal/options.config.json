@@ -4,7 +4,7 @@
       { "value": "projected_premium", "name": "Projected premium" },
       { "value": "company_retention", "name": "Company retention" },
       { "value": "limit", "name": "Limit" },
-      { "value": "total_insured_value", "name": "Projected premium" },
+      { "value": "total_insured_value", "name": "Total insured value" },
       { "value": "projected_loss_ratio", "name": "Projected loss ratio" }
     ],
     "xol": [
@@ -12,7 +12,7 @@
       { "value": "reinstatement", "name": "Reinstatement" }
     ],
     "surplus": [
-      { "value": "company_retention", "name": "Ceding percentage" },
+      { "value": "ceding_percentage", "name": "Ceding percentage" },
       { "value": "surplus_retention", "name": "Surplus retention" },
       { "value": "surplus_reinsured_proportion_percentage", "name": "Surplus reinsured proportion or percentage" },
       { "value": "surplus_insured_value", "name": "Surplus insured value" }

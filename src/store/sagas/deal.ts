@@ -5,6 +5,7 @@ import { dealSelector, userSelector } from '../selectors';
 import { ActionTypes } from '../actions';
 import app from '../../feathers';
 import _, { update } from 'lodash';
+import { useSelector } from 'react-redux';
 
 export default [
   createDealWatcher,
@@ -173,6 +174,28 @@ function * editDetailHandler ({ payload: { _id, data } }: EditDetailHandlerProps
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   }
 }
+
+// interface EditTerritoryProps {
+//   type: string;
+//   payload: {
+//     dealId: string;
+//     state: string;
+//     add: boolean;
+//   }
+// }
+
+// function * editTerritoryHandler({ payload: { dealId, state, add } }: EditTerritoryProps) {
+//   try {
+//     const dealState = yield select(dealSelector);
+//     const deal = dealState.find(d => d._id === dealId);
+//     if (!deal) throw new Error('Something went wrong');
+//     if (add) {
+
+//     }
+//   } catch(e) {
+
+//   }
+// }
 
 interface SearchDealsProps {
   type: string;

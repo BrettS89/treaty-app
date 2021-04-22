@@ -95,67 +95,81 @@ const Deal = (props: any) => {
         });
       });
   };
+
+  const updateTerritory = (state?: string, exists?: boolean, selectAll?: string[]): void => {
+    let territories = !exists
+      ? [...deal.territories, state]
+      : deal.territories.filter(t => t !== state);
+
+    if (selectAll) territories = selectAll;
+
+    dispatch({
+      type: ActionTypes.EDIT_DEAL,
+      payload: {
+        _id: deal._id,
+        data: { territories },
+      },
+    });
+  };
   
   useEffect(() => {
     if (!deal) {
       dispatch({ type: ActionTypes.GET_MY_DEALS });
     } else {
+      const options: { value: string, name: string }[] = [
+        ...optionsConfig.treatyInformation.general
+      ];
+
       const expensesOptionsArr: { value: string, name: string }[] = [
         ...optionsConfig.expenses.general,
       ];
 
-      const options = [
-        { value: 'projected_premium', name: 'Projected premium' },
-        { value: 'company_retention', name: 'Company retention' },
-        { value: 'limit', name: 'Limit' },
-        { value: 'total_insured_value', name: 'Total insured value' },
-        { value: 'projected_loss_ratio', name: 'Projected loss ratio' },
+      const generalTermsOptions: { value: string, name: string }[] = [
+        ...optionsConfig.generalTerms.general
       ];
 
       if (deal.treaty_type.includes('Excess of loss')) {
-
-        // options.push({ value: 'premium_rate', name: 'Premium rate' });
-        // options.push({ value: 'reinstatement', name: 'Reinstatement' });
-        options.push({ value: 'reinsurance_rate', name: 'Reinsurance rate' });
-        options.push({ value: 'reinstatement', name: 'Reinstatement' });
+        optionsConfig.treatyInformation.xol.forEach(o => options.push(o));
+        optionsConfig.generalTerms.xol.forEach(o => generalTermsOptions.push(o));
+        optionsConfig.expenses.xol.forEach(o => expensesOptionsArr.push(o));
       }
 
       if (deal.treaty_type.includes('Surplus')) {
-        options.push({ value: 'ceding_percentage', name: 'Ceding percentage' });
-        options.push({ value: 'surplus_retention', name: 'Surplus retention' });
-        options.push({ value: 'surplus_reinsured_proportion_percentage', name: 'Surplus reinsured proportion or percentage' });
-        options.push({ value: 'surplus_insured_value', name: 'Surplus insured value' });
+        optionsConfig.treatyInformation.surplus.forEach(o => options.push(o));
+        optionsConfig.generalTerms.surplus.forEach(o => generalTermsOptions.push(o));
+        optionsConfig.expenses.surplus.forEach(o => expensesOptionsArr.push(o));
       }
 
       if (deal.treaty_type.includes('Quota share')) {
-        // options.push({ value: 'ceding_percentage', name: 'Ceding percentage' });
-        options.push({ value: 'ceding_comission', name: 'Ceding comission' });
+        optionsConfig.treatyInformation.quotaShare.forEach(o => options.push(o));
+        optionsConfig.generalTerms.quotaShare.forEach(o => generalTermsOptions.push(o));
+        optionsConfig.expenses.quotaShare.forEach(o => expensesOptionsArr.push(o));
       }
 
       if (deal.program_business) {
-        options.push({ value: 'mga_mgu', name: 'Name of MGA/MGU' });
-        options.push({ value: 'mga_commision', name: 'MGA comission' });
-        options.push({ value: 'carrier_retention', name: 'Carrier retention' });
-        options.push({ value: 'mga_retention', name: 'MGA retention' });
+        optionsConfig.treatyInformation.programBusiness.forEach(o => options.push(o));
+        optionsConfig.generalTerms.programBusiness.forEach(o => generalTermsOptions.push(o));
+        optionsConfig.expenses.programBusiness.forEach(o => expensesOptionsArr.push(o));
+      }
+
+      if (deal.insurance_type.includes('Property')) {
+        optionsConfig.treatyInformation.property.forEach(o => options.push(o));
+        optionsConfig.generalTerms.property.forEach(o => generalTermsOptions.push(o));
+        optionsConfig.expenses.property.forEach(o => expensesOptionsArr.push(o));
       }
 
       const details = deal.details.map(d => d.key);
 
       const filteredOptions = options.filter(o => !details.includes(o.value));
-      const filteredExpenseOptions = expensesOptions.filter(o => !details.includes(o.value));
-      const uniqueOptions: { value: string; name: string }[] = [];
+      const filteredExpenseOptions = expensesOptionsArr.filter(o => !details.includes(o.value));
+      const filteredGeneralTermsOptions = generalTermsOptions.filter(o => !details.includes(o.value));
 
-      filteredOptions.forEach(o => {
-        if (!uniqueOptions.find(option => option.value === o.value)) {
-          uniqueOptions.push(o);
-        }
-      });
-
-      setMenuOptions(uniqueOptions);
+      setMenuOptions(filteredOptions);
       setExpensesOptions(filteredExpenseOptions);
+      setGeneralTermsOptions(filteredGeneralTermsOptions);
     }
   }, [deal]);
-  
+
   return deal
     ? (
     <View
@@ -164,6 +178,7 @@ const Deal = (props: any) => {
       editing={editing}
       editingDetail={editingDetail}
       expensesOptions={expensesOptions}
+      generalTermsOptions={generalTermsOptions}
       menuOptions={menuOptions}
       onCancel={onCancel}
       onSaveField={onSaveField}
@@ -172,6 +187,7 @@ const Deal = (props: any) => {
       setEditingDetail={setEditingDetail}
       setSideComponent={setSideComponent}
       sideComponent={sideComponent}
+      updateTerritory={updateTerritory}
     />
   )
   : <div></div>

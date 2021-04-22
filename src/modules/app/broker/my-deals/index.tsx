@@ -7,8 +7,13 @@ import { StoreState } from '../../../../store';
 const MyDeals = (props) => {
   const deal = useSelector((state: StoreState) => state.deal);
 
-  const navigateToDeal = (_id: string): void => {
-    props.history.push('/app/broker/my-deals/' + _id);
+  const navigateToDeal = (_id: string, screen: string): void => {
+    if (screen === 'manage') {
+      props.history.push('/app/broker/manage/' + _id);
+    } else if (screen === 'edit') {
+      props.history.push('/app/broker/my-deals/' + _id);
+    }
+    
   };
 
   return (

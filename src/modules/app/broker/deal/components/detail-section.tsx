@@ -32,9 +32,11 @@ const DetailSection: FC<TreatyInformationProps> = ({ addDetail, deal, menuOption
       return { ...acc, [curr.value]: true };
     }, {});
 
-  const renderDetails = (): JSX.Element[] => 
-    deal.details
-    .filter(d => createTable()[d.key])
+  const renderDetails = (): JSX.Element[] => {
+    const table = createTable();
+
+    return deal.details
+    .filter(d => table[d.key])
     .map((detail) => (
       <Detail
         detail={detail}
@@ -44,6 +46,7 @@ const DetailSection: FC<TreatyInformationProps> = ({ addDetail, deal, menuOption
         setEditedValue={setEditedValue}
       />
     ));
+  }
 
   return (
     <div className="Deal-details title">

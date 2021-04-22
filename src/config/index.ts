@@ -1,3 +1,7 @@
+import conf from './config.json';
+
+export const config = conf;
+
 const url = (env: string): string => {
   switch(env) {
     case 'LOCAL':

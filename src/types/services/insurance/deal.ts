@@ -3,6 +3,7 @@ import { Detail } from './detail';
 import { User } from '../security';
 
 export interface Deal extends Partial<Resource> {
+  access: any[];
   account_id: string;
   user_id: string;
   treaty_type: string[];
@@ -18,8 +19,9 @@ export interface Deal extends Partial<Resource> {
   insurance_company?: string;
   detail_ids: string[];
   details: Detail[];
+  messages?: any[];
   executive_summary?: string;
   additional_details?: string;
-  location?: string[];
+  territories?: string[];
   user?: User;
 }

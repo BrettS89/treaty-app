@@ -1,4 +1,5 @@
 import './styles.css';
+import { useState } from 'react';
 import authorization from '../../../../components/authorization';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +15,8 @@ const ReDeal = (props: any) => {
   const dealState = useSelector((state: StoreState) => state.deal);
   const isFollowing = !!dealState.dealsFollowing.find(d => d._id === deal_id)
   let deal = dealState.accessibleDeals.filter(deal => deal._id === deal_id)[0];
+
+  const [rightComponent, setRightComponent] = useState<string>('TreatyInformation');
 
   const followDeal = (): void => {
     dispatch({ type: ActionTypes.FOLLOW_DEAL, payload: deal._id });
@@ -38,6 +41,8 @@ const ReDeal = (props: any) => {
         deal={deal}
         followDeal={followDeal}
         isFollowing={isFollowing}
+        rightComponent={rightComponent}
+        setRightComponent={setRightComponent}
         unFollowDeal={unFollowDeal}
       />
     )

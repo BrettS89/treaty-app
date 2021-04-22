@@ -5,7 +5,7 @@ import useStyles from './styles';
 
 interface MyDealsProps {
   myDeals: Deal[];
-  navigateToDeal(_id: string): void
+  navigateToDeal(_id: string, screen: string): void
 }
 
 const View = (props: MyDealsProps) => {

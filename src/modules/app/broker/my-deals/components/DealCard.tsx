@@ -6,7 +6,7 @@ import useStyles from '../styles';
 
 interface DealCardProps {
   deal: Deal;
-  navigateToDeal(_id: string): void
+  navigateToDeal(_id: string, screen: string): void
 }
 
 const DealCard = (props: DealCardProps) => {
@@ -27,12 +27,17 @@ const DealCard = (props: DealCardProps) => {
       </div>
       <div style={{ display: 'flex' }}>
         <Button
-          color="primary" className={classes.btn}
-          onClick={() => navigateToDeal(deal._id)}
+          color="primary"
+          className={classes.btn}
+          onClick={() => navigateToDeal(deal._id, 'edit')}
         >
           Edit
         </Button>
-        <Button color="primary" className={classes.btn}>
+        <Button
+          color="primary"
+          className={classes.btn}
+          onClick={() => navigateToDeal(deal._id, 'manage')}
+        >
           Manage
         </Button>
       </div>

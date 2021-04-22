@@ -47,3 +47,17 @@ code {
 .MuiMenuItem-root:hover{
   background-color: #F5F5F5!important;
 }
+
+.no-style-button {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;  
+}
+
+.small-font {
+  font-size: 12px;
+}
