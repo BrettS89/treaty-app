@@ -6,6 +6,6 @@
 
 .App-main {
   display: flex;
-  height: 100%;
+  flex-grow: 2;
   width: 100%;
 }

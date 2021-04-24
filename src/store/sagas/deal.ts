@@ -199,21 +199,21 @@ function * editDetailHandler ({ payload: { _id, data } }: EditDetailHandlerProps
 
 interface SearchDealsProps {
   type: string;
-  payload: {
-    account_id: string
-  }
+  payload: string;
 }
 
-function * searchDealsHandler({ payload: { account_id } }: SearchDealsProps) {
+function * searchDealsHandler({ payload }: SearchDealsProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
     const query = {
       query: {
-        account_id,
+        account_id: payload,
         $resolve: { deal: true },
         $sort: { createdAt: -1 },
+        $limit: 1000,
       },
     };
+
     const fn = () => app.service('insurance/access').find(query);
     const deals = yield call(fn);
     const dealState = yield select(dealSelector);

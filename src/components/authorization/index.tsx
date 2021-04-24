@@ -28,6 +28,7 @@ const authorization = (ChildComponent: any) => {
             if (role.name === 'broker') {
               dispatch({ type: ActionTypes.GET_MY_DEALS });
             } else if (role.name === 'reinsurer') {
+              console.log(userData);
               dispatch({ type: ActionTypes.SEARCH_DEALS, payload: userData.account_id });
               dispatch({ type: ActionTypes.GET_DEALS_FOLLOWING, payload: { user_id: userData._id } });
             }

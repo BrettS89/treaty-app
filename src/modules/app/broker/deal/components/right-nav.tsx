@@ -4,17 +4,45 @@ import useStyles from '../styles';
 import '../styles.css';
 
 interface RightNavProps {
+  chat?: boolean;
   component: string;
+  messages?: any[];
   setSideComponent(str: string): void;
+  userId?: string;
 }
 
-const RightNav: FC<RightNavProps> = ({ component, setSideComponent }) => {
+const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false, userId = '', messages = [] }) => {
   const classes = useStyles();
+
+  const unread = messages.reduce((acc, curr) => {
+    return !curr.read.includes(userId)
+      ? acc + 1
+      : acc;
+  }, 0);
 
   const setColor = (str: string): string => {
     return str === component
       ? '#069CEC'
       : 'grey';
+  };
+
+  const renderBadge = () => {
+    if (unread > 0) {
+      return (
+        <span className="Deal-right-nav-link-span">{unread}</span>
+      );
+    }
+  };
+
+  const renderChat = () => {
+    if (chat) {
+      return (
+        <div className="Deal-right-nav-link" style={{ display: 'flex' }} onClick={() => setSideComponent('Chat')}>
+          <Typography style={{ color: setColor('Chat') }} className={classes.rightNavLink}>Chat</Typography>
+          {renderBadge()}
+        </div>
+      );
+    }
   };
 
   return (
@@ -38,6 +66,8 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent }) => {
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('TreatyInformation')}>
         <Typography className={classes.rightNavLink}>Files</Typography>
       </div>
+
+      {renderChat()}
     </div>
   );
 };

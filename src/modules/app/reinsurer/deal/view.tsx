@@ -4,18 +4,25 @@ import useStyles from './styles';
 import TreatyDetails from '../../broker/deal/components/treaty-details';
 import RightNav from '../../broker/deal/components/right-nav';
 import Details from './components/detail';
+import Chat from './components/chat';
 
 interface ReDealProps {
   deal: DealType;
   followDeal(): void;
   isFollowing: boolean;
+  message: string;
+  messages: any[];
+  onTypeMessage(str: string): void;
   rightComponent: string;
+  sendMessage(): void;
   setRightComponent(str: string): void;
   unFollowDeal(): void;
+  updateUnread(arr: any[]): void;
+  userId: string;
 }
 
 const View = (props: ReDealProps) => {
-  const { deal, followDeal, isFollowing, rightComponent, setRightComponent, unFollowDeal } = props;
+  const { deal, followDeal, isFollowing, message, messages, onTypeMessage, rightComponent, sendMessage, setRightComponent, unFollowDeal, updateUnread, userId } = props;
   const classes = useStyles();
 
   const renderFollowing = (): JSX.Element => {
@@ -68,6 +75,18 @@ const View = (props: ReDealProps) => {
             deal={deal}
             title="Expenses"
             section="expenses"
+          />
+        );
+
+      case 'Chat':
+        return (
+          <Chat
+            message={message}
+            messages={messages}
+            onTypeMessage={onTypeMessage}
+            sendMessage={sendMessage}
+            updateUnread={updateUnread}
+            userId={userId}
           />
         );
 
@@ -136,7 +155,10 @@ const View = (props: ReDealProps) => {
         <div className="ReDeal-content" style={{ marginLeft: 10 }}>
           <RightNav
             component={rightComponent}
+            messages={messages}
             setSideComponent={setRightComponent}
+            userId={userId}
+            chat
           />
           {renderRightComponent()}
         </div>

@@ -9,7 +9,7 @@ const MyDeals = (props) => {
 
   const navigateToDeal = (_id: string, screen: string): void => {
     if (screen === 'manage') {
-      props.history.push('/app/broker/manage/' + _id);
+      props.history.push('/app/broker/my-deals/manage/' + _id);
     } else if (screen === 'edit') {
       props.history.push('/app/broker/my-deals/' + _id);
     }

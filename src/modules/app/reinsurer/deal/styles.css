@@ -21,6 +21,8 @@
 }
 
 .ReDeal-content {
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   height: 100%;
   width: 50%;
@@ -56,4 +58,52 @@
   align-items: center;
   justify-content: space-between;
   padding: 7px 10px;
+}
+
+.re-chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.re-chat-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.re-chat-messages {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  height: 400px;
+  overflow: scroll;
+}
+
+.re-chat-input  {
+  border: 1px solid #e0e0e0;
+  height: 75px;
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  background-color: #F6F7FB;
+}
+
+.re-chat-input-field {
+  display: flex;
+  flex-grow: 2;
+}
+
+.re-chat-input-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.re-chat-input-button-send {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  background-color: #069CEC;
+  color: #fff;
 }

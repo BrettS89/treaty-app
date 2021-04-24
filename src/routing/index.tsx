@@ -26,7 +26,7 @@ export default () => {
       <Route exact path="/app/reinsurer/my-deals" component={reinsurerDeals} />
       <Route exact path="/app/reinsurer/dashboard" component={reinsurerDashboard} />
       
-      <Route exact path="/app/broker/manage/:id" component={Manage} />
+      <Route exact path="/app/broker/my-deals/manage/:id" component={Manage} />
       <Route exact path="/app/broker/my-deals/:id" component={Deal} />
       <Route exact path="/app/broker/create-deal" component={CreateDeal} />
       <Route exact path="/app/broker/markets" component={Markets} />

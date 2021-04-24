@@ -32,6 +32,20 @@
   cursor: pointer;
 }
 
+.Deal-right-nav-link-span {
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 3px;
+  height: 17px;
+  width: 17px;
+  border-radius: 50px;
+  background-color: #F44436;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .Deal-row {
   display: flex;
   align-items: center;

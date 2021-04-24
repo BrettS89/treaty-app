@@ -2,13 +2,14 @@
   padding: 20px;
   width: 100%;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   background-color: #F6F7FB;
 }
 
 .Manage-chat {
   display: flex;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .Manage-chat-companies {
@@ -25,22 +26,23 @@
   padding: 20px;
   background-color: #fff;
   border-radius: 4px;
-  width: 100%;
+  flex-grow: 1;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 .Manage-chat-content-messages {
   display: flex;
   flex-direction: column;
-  flex-grow: 2;
+  height: 100%;
+  overflow: scroll!important;
 }
 
 .Manage-chat-content-messages-list {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  overflow-y: scroll;
-  margin-top: 15px;
+  height: 400px;
+  overflow: scroll;
 }
 
 .Manage-chat-content-messages-message {
@@ -76,7 +78,6 @@
 }
 
 .Manage-chat-companies-company {
-  /* margin: 0 20px; */
   border-bottom: 1px solid #e0e0e0;
   padding: 15px;
 }
