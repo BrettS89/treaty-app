@@ -5,6 +5,7 @@ import RightNav from './components/right-nav';
 import TreatyDetails from './components/treaty-details';
 import DetailSection from './components/detail-section';
 import Territory from './components/territory';
+import DealMarkets from './components/markets';
 
 interface DealViewProps {
   addDetail(arg: any): void;
@@ -13,6 +14,8 @@ interface DealViewProps {
   editingDetail: string;
   expensesOptions: { value: string; name: string }[];
   generalTermsOptions: { value: string; name: string }[];
+  lists: any[];
+  marketNotes: Record<string, any>
   menuOptions: { value: string; name: string }[];
   onCancel(): void;
   onSaveField(str?: string): void;
@@ -21,11 +24,13 @@ interface DealViewProps {
   setEditingDetail(str: string): void
   setSideComponent(str: string): void;
   sideComponent: string;
+  updateMarketList(str: string): void;
   updateTerritory: any
+  upsertMarketNote(account_id: string, note: string): void;
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, editing, editingDetail, expensesOptions, generalTermsOptions, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent, updateTerritory } = props;
+  const { addDetail, deal, editing, editingDetail, expensesOptions, generalTermsOptions, lists, marketNotes, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent, updateMarketList, updateTerritory, upsertMarketNote } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -400,6 +405,17 @@ const View = (props: DealViewProps) => {
           />
         );
 
+      case 'Markets':
+        return (
+          <DealMarkets
+            deal={deal}
+            lists={lists}
+            marketNotes={marketNotes}
+            updateMarketList={updateMarketList}
+            upsertMarketNote={upsertMarketNote}
+          />
+        );
+
       default:
         return (
           <DetailSection
@@ -439,6 +455,7 @@ const View = (props: DealViewProps) => {
           <RightNav
             component={sideComponent}
             setSideComponent={setSideComponent}
+            markets
           />
 
           {renderRightPanel()}

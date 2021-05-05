@@ -47,12 +47,15 @@ const useStyles = makeStyles(theme => ({
   detailInput: {
     width: 250,
     padding: 0,
-    // height: 30,
     marginLeft: 5,
   },
   checkbox: {
     paddingTop: 4,
     paddingBottom: 4,
+  },
+  removeMarketListText: {
+    fontSize: 14,
+    color: '#F44436'
   }
 }));
 

@@ -13,7 +13,6 @@ const MyDeals = (props) => {
     } else if (screen === 'edit') {
       props.history.push('/app/broker/my-deals/' + _id);
     }
-    
   };
 
   return (

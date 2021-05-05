@@ -27,8 +27,8 @@ const authorization = (ChildComponent: any) => {
 
             if (role.name === 'broker') {
               dispatch({ type: ActionTypes.GET_MY_DEALS });
+              dispatch({ type: ActionTypes.GET_MARKET_LISTS, payload: userData._id });
             } else if (role.name === 'reinsurer') {
-              console.log(userData);
               dispatch({ type: ActionTypes.SEARCH_DEALS, payload: userData.account_id });
               dispatch({ type: ActionTypes.GET_DEALS_FOLLOWING, payload: { user_id: userData._id } });
             }
@@ -38,8 +38,6 @@ const authorization = (ChildComponent: any) => {
             props.history.push('/');
           }
         }
-
-
 
         if (path.includes('app') && !role) {
           props.history.push('/');

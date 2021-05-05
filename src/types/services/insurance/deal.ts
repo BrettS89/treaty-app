@@ -19,6 +19,8 @@ export interface Deal extends Partial<Resource> {
   insurance_company?: string;
   detail_ids: string[];
   details: Detail[];
+  market_list_id: string;
+  market_list: any;
   messages?: any[];
   executive_summary?: string;
   additional_details?: string;

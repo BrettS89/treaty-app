@@ -7,10 +7,9 @@ const useStyles = makeStyles({
   },
   dealTitle: {
     width: 340,
-    fontSize: 18,
+    fontSize: 17,
     marginLeft: 50,
-    // fontWeight: 600
-    // textDecoration: 'underline'
+    fontWeight: 600
   },
   btn: {
     fontWeight: 600,

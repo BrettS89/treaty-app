@@ -49,7 +49,6 @@ const Territory: FC<TerritoryProps> = ({ deal, updateTerritory }) => {
 
   return (
     <div>
-      {console.log(deal.territories.length)}
       <div className="Deal-territories-top">
         <Typography variant="h6" className={classes.detailsSectionTitle}>
           Territory

@@ -1,6 +1,7 @@
 import './styles.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 import { StoreState } from '../../../../store';
 import { ActionTypes } from '../../../../store/actions';
 import authorization from '../../../../components/authorization';
@@ -27,6 +28,7 @@ const Deal = (props: any) => {
   const dispatch = useDispatch();
   const deal_id = props.match.params.id;
   const deals = useSelector((state: StoreState) => state.deal);
+  const market = useSelector((state: StoreState) => state.market);
   const deal = deals.myDeals.filter((deal) => deal._id === deal_id)[0];
   let dealData: DealType;
 
@@ -34,6 +36,7 @@ const Deal = (props: any) => {
   const [editing, setEditing] = useState<string>('');
   const [editingDetail, setEditingDetail] = useState<string>('')
   const [editedValue, setEditedValue] = useState<string | number>(null);
+  const [marketNotes, setMarketNotes] = useState(null);
   const [menuOptions, setMenuOptions] = useState<{ value: string; name: string }[]>([])
   const [generalTermsOptions, setGeneralTermsOptions] = useState<{ value: string; name: string }[]>([])
   const [expensesOptions, setExpensesOptions] = useState<{ value: string; name: string }[]>([])
@@ -111,6 +114,59 @@ const Deal = (props: any) => {
       },
     });
   };
+
+  const getMarketNotes = async () => {
+    const notes = await app.service('market/note').find({
+      query: {
+        deal_id,
+      },
+    });
+
+    const notesObj = notes.data.reduce((acc, curr) => {
+      acc[curr.account_id] = curr;
+      return acc;
+    }, {});
+
+    setMarketNotes(notesObj);
+  };
+
+  const updateMarketList = (list: any, remove: boolean = false) => {
+    if (!list && !remove) return;
+
+    dispatch({
+      type: ActionTypes.EDIT_DEAL,
+      payload: {
+        _id: deal._id,
+        data: { market_list_id: remove ? null : list._id }
+      },
+    });
+
+    if (remove) setMarketNotes({});
+  };
+
+  const upsertMarketNote = (account_id: string, notes: string) => {
+    const service = app.service('market/note')
+
+    service
+      .find({
+        query: {
+          deal_id,
+          account_id,
+        }
+      })
+      .then(res => {
+        const note = res.data[0];
+
+        return note
+          ? service.patch(note._id, { notes })
+          : service.create({ deal_id, account_id, notes });
+      })
+      .then(res => {
+        const clonedMarketNotes = _.cloneDeep(marketNotes);
+        clonedMarketNotes[res.account_id] = res;
+        setMarketNotes(clonedMarketNotes);
+      })
+  };
   
   useEffect(() => {
     if (!deal) {
@@ -170,7 +226,11 @@ const Deal = (props: any) => {
     }
   }, [deal]);
 
-  return deal
+  useEffect(() => {
+    getMarketNotes();
+  }, []);
+
+  return deal && marketNotes
     ? (
     <View
       addDetail={addDetail}
@@ -179,6 +239,8 @@ const Deal = (props: any) => {
       editingDetail={editingDetail}
       expensesOptions={expensesOptions}
       generalTermsOptions={generalTermsOptions}
+      lists={market.lists}
+      marketNotes={marketNotes}
       menuOptions={menuOptions}
       onCancel={onCancel}
       onSaveField={onSaveField}
@@ -187,7 +249,9 @@ const Deal = (props: any) => {
       setEditingDetail={setEditingDetail}
       setSideComponent={setSideComponent}
       sideComponent={sideComponent}
+      updateMarketList={updateMarketList}
       updateTerritory={updateTerritory}
+      upsertMarketNote={upsertMarketNote}
     />
   )
   : <div></div>

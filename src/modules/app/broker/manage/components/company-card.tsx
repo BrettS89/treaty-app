@@ -32,7 +32,7 @@ const CompanyCard = ({ account, currentChat, messages, setCurrentChatCompany, up
       ); 
     }
     return <span className="Manage-chat-companies-company-messages">{unread} Unread</span>
-  }
+  };
 
   const color = currentChat._id === account._id
     ? 'primary'

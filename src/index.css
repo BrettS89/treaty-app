@@ -61,3 +61,7 @@ code {
 .small-font {
   font-size: 12px;
 }
+
+.hover:hover {
+  cursor: pointer;
+}

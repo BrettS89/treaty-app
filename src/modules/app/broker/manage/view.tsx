@@ -41,7 +41,7 @@ const ManageView = ({ deal, currentChat, message, messages, onTypeMessage, sendM
 
   return (
     <div className="Manage">
-      <div style={{ marginBottom: 30 }}>
+      <div style={{ marginBottom: 15 }}>
         <Typography variant="h4" className="title">
           {deal.title}
         </Typography>
