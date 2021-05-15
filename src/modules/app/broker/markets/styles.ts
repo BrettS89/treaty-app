@@ -5,7 +5,6 @@ const useStyles = makeStyles({
     fontWeight: 600,
   },
   editButton: {
-    fontWeight: 600,
     marginLeft: 10,
   }
 });

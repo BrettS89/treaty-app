@@ -16,7 +16,7 @@ const MarketRow = ({ market, upsertMarketNote }) => {
   const renderNotes = () => {
     if (editingNotes) {
       return (
-        <div style={{ width: '100%' }}>
+        <div className="full-width">
           <TextField
             label="Notes"
             value={market.note}
@@ -27,7 +27,7 @@ const MarketRow = ({ market, upsertMarketNote }) => {
             multiline
             rows={2}
           />
-          <div style={{ marginTop: 7 }}>
+          <div className="Deal-market-notes-buttons">
             <Button color="primary" onClick={upsertNote}>Save</Button>
             <Button onClick={() => setEditingNotes(false)}>Cancel</Button>
           </div>
@@ -35,25 +35,25 @@ const MarketRow = ({ market, upsertMarketNote }) => {
       );
     } else {
       return (
-        <Typography style={{ fontSize: 13 }}>
+        <Typography className="Deal-market-notes-static">
           {market.notes ?? 'Notes'}
         </Typography>
       );
     }
-  }
+  };
 
   return (
     <div className="Deal-markets-market">
       <div className="Deal-markets-toprow">
-        <div style={{ width: 200  }}>
-        <Typography style={{ fontSize: 14, fontWeight: 600 }}>
-          {market.account.name}
-        </Typography>
+        <div className="Deal-market-toprow-name">
+          <Typography className="Deal-market-notes-market-name">
+            {market.account.name}
+          </Typography>
         </div>
         <Button color="primary" onClick={() => setEditingNotes(true)}>
           Edit notes
         </Button>
-        <div style={{ maxWidth: 120, minWidth: 120 }}>
+        <div className="Deal-market-contact">
           <Button color="primary">
             {market.name ?? 'No contact'}
           </Button>

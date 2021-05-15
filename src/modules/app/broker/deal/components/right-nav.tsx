@@ -59,7 +59,7 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false
   return (
     <div className="Deal-right-nav">
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('TreatyInformation')}>
-        <Typography style={{ color: setColor('TreatyInformation') }} className={classes.rightNavLink}>Treaty Information</Typography>
+        <Typography style={{ color: setColor('TreatyInformation') }} className={classes.rightNavLink}>Treaty Info</Typography>
       </div>
 
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('GeneralTerms')}>

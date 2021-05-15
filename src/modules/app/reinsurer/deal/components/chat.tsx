@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { TextField, Typography } from '@material-ui/core';
 import useStyles from '../styles';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
-import Message from '../../../broker/manage/components/message';
+import Message from '../../../broker/chat/components/message';
 
 const Chat = ({ message, messages, onTypeMessage, sendMessage, updateUnread, userId }) => {
   console.log('HI');

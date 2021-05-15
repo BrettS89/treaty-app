@@ -93,7 +93,7 @@ const ConfigureList = ({ addMarketToList, deleteList, deleteMarket, list, setMar
           getOptionLabel={(option: any) => option.name}
           style={{ width: 400 }}
           renderInput={(params) => <TextField size="small" {...params} label="Add markets to this list" variant="outlined" />}
-          onChange={addMarketToList}
+          onChange={(event, newValue) => addMarketToList(newValue)}
         />
       </div>
       <div className="configure-list-markets">
@@ -101,11 +101,12 @@ const ConfigureList = ({ addMarketToList, deleteList, deleteMarket, list, setMar
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Company name</TableCell>
-                <TableCell align="right">Contact name</TableCell>
-                <TableCell align="right">Contact email</TableCell>
-                <TableCell align="right">Contact phone</TableCell>
-                <TableCell align="right">Remove</TableCell>
+                <TableCell className={classes.subHeader}>Company name</TableCell>
+                <TableCell align="right" className={classes.subHeader}>Name</TableCell>
+                <TableCell align="right" className={classes.subHeader}>Title</TableCell>
+                <TableCell align="right" className={classes.subHeader}>Email</TableCell>
+                <TableCell align="right" className={classes.subHeader}>Phone</TableCell>
+                <TableCell align="right" className={classes.subHeader}>Remove</TableCell>
               </TableRow>
             </TableHead>
             {renderMarkets()}

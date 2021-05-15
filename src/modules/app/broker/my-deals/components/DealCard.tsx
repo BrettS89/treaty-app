@@ -40,6 +40,13 @@ const DealCard = (props: DealCardProps) => {
         >
           Manage
         </Button>
+        <Button
+          color="primary"
+          className={classes.btn}
+          onClick={() => navigateToDeal(deal._id, 'chat')}
+        >
+          Chat
+        </Button>
       </div>
       <div style={{ display: 'flex' }}>
         <Typography className={classes.marketText}>

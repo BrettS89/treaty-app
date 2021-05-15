@@ -1,86 +1,34 @@
-import './styles.css';
-import { useEffect, useRef } from 'react';
-import { TextField, Typography } from '@material-ui/core';
-import CompanyCard from './components/company-card';
-import Message from './components/message';
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import { Button, TextField, Typography } from '@material-ui/core';
+import useStyles from './styles';
+import DateCard from './components/date-card';
+import Key from './components/key';
+const dates = ['10-15-2021', '10-22-2021', '10-29-2021', '11-05-2021', '11-12-2021', '11-19-2021', '11-26-2021', '12-3-2021', '12-10-2021', '12-17-2021', '12-24-2021', '12-31-2021'];
 
-const ManageView = ({ deal, currentChat, message, messages, onTypeMessage, sendMessage, setCurrentChatCompany, updateUnread, userId }: any) => {
-  let messagesEnd = useRef();
+const ManageView = ({ deal }) => {
+  const renderDates = () => dates.map(d => (
+    <DateCard
+      key={d}
+      date={d}
+    />
+  ));
 
-  const scrollToBottom = () => {
-    //@ts-ignore
-    messagesEnd.current.scrollIntoView({  });
+  const renderProgress = ({ field, row }) => {
+
   };
-
-  const renderAccounts = () => {
-    return deal.access.map((a: any) => (
-      <CompanyCard
-        key={a._id}
-        account={a.account}
-        currentChat={currentChat}
-        messages={messages}
-        setCurrentChatCompany={setCurrentChatCompany}
-        updateUnread={updateUnread}
-        userId={userId}
-      />
-    ));
-  };
-
-  const renderMessages = () => {
-    const messagesToRender = messages[currentChat._id] ?? [];
-
-    return messagesToRender.map(m => (
-      <Message key={m._id} message={m} userId={userId} />
-    ));
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, currentChat])
-
+  
   return (
     <div className="Manage">
-      <div style={{ marginBottom: 15 }}>
-        <Typography variant="h4" className="title">
-          {deal.title}
-        </Typography>
-      </div>
-      <div className="Manage-chat">
-        <div className="Manage-chat-companies">
-          {renderAccounts()}
+      <Typography variant="h4" className="title">
+        {deal.title}
+      </Typography>
+      <div className="Manage-content">
+        <div className="Manage-content-keys">
+          <Key title="Not started" color="#e0e0e0" />
+          <Key title="In Progress" color="#e0e0e0" />
+          <Key title="Complete" color="#50c878" />
         </div>
-        <div className="Manage-chat-content">
-          <div className="Manage-chat-content-messages">
-            <div className="Manage-chat-content-messages-list">
-              {renderMessages()}
-              <div
-                style={{ float:"left", clear: "both" }}
-                ref={messagesEnd}>
-              </div>
-            </div>
-          </div>
-          <div className="Manage-chat-content-input">
-            <div className="Manage-chat-content-input-field">
-              <TextField
-                multiline
-                style={{ width: '100%' }}
-                rows={3}
-                placeholder="Type your message"
-                InputProps={{ disableUnderline: true }}
-                value={message}
-                onChange={onTypeMessage}
-              />
-            </div>
-            <div className="Manage-chat-content-input-button">
-              <button
-                className="no-style-button Manage-chat-content-input-button-send"
-                onClick={sendMessage}
-              >
-                <SendRoundedIcon style={{ fontSize: 30, paddingLeft: 4, paddingTop: 3 }} />
-              </button>
-            </div>
-          </div>
+        <div className="Manage-content-dates">
+          {renderDates()}
         </div>
       </div>
     </div>

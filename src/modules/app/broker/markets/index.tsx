@@ -1,36 +1,26 @@
 import './styles.css';
 import _ from 'lodash';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../../../../store';
+import { ActionTypes } from '../../../../store/actions';
 import View from './view';
 import authorization from '../../../../components/authorization';
 import api from '../../../../feathers';
 
 const Markets = () => {
+  const dispatch = useDispatch();
+
+  const market = useSelector((state: StoreState) => state.market);
   const user = useSelector((state: StoreState) => state.user);
 
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [marketEditing, setMarketEditing] = useState({ field: '', id: '' });
+  const [marketEditing, setMarketEditing] = useState({ field: '', id: '', account_id: '' });
   const [markets, setMarkets] = useState([]);
   const [marketFieldModal, setMarketFieldModal] = useState(false);
   const [selectedList, setSelectedList] = useState(null);
   const [visibleMarkets, setVisibleMarkets] = useState([]);
-
-  const fetchLists = (): Promise<void> => {
-    return api.service('insurance/market-list').find({
-      query: {
-        user_id: user.details._id,
-        $sort: { createdAt: -1 },
-        $resolve: { markets: true },
-      }
-    })
-    .then(res => {
-      setLists(res.data);
-      setSelectedList(res.data[0] ?? null);
-    });
-  };
 
   const fetchMarkets = (): Promise<void> => {
     return api.service('security/account').find({
@@ -50,46 +40,31 @@ const Markets = () => {
   };
 
   const createList = (): void => {
-    api.service('insurance/market-list').create({
-      account_id: user.details.account_id,
-      user_id: user.details._id,
-    }, {
-      query: { $resolve: { markets: true } },
-    })
-    .then(res => {
-      setLists([res, ...lists]);
-      setSelectedList(res);
+    dispatch({
+      type: ActionTypes.CREATE_MARKET_LIST,
+      payload: {
+        data: {
+          account_id: user.details.account_id,
+          user_id: user.details._id,
+        },
+        callback: setSelectedList,
+      }
+    });
+  };
+
+  const editList = (data: Record<string, any>) => {
+    dispatch({
+      type: ActionTypes.EDIT_MARKET_LIST,
+      payload: { id: selectedList._id, data },
     });
   };
 
   const updateListName = (name: string) => {
-    api.service('insurance/market-list').patch(selectedList._id, {
-      name,
-    }, {
-      query: { $resolve: { markets: true } }
-    })
-      .then(res => {
-        setSelectedList(res);
-        const newLists = lists.map(l => {
-          return l._id === res._id
-            ? res
-            : l
-        });
-        setLists(newLists);
-      });
+    editList({ name });
   };
 
   const deleteList = async () => {
-    try {
-      const id = _.cloneDeep(selectedList)._id;
-      await api.service('insurance/market-list').remove(id, {});
-      const newList = lists.filter(l => l._id !== selectedList._id);
-      console.log(newList);
-      setLists(newList);
-      setSelectedList(null);
-    } catch(e) {
-      console.log(e)
-    }
+    dispatch({ type: ActionTypes.DELETE_MARKET_LIST, payload: selectedList._id });
   };
 
   const openCloseModal = (isOpen, editing?) => {
@@ -97,30 +72,44 @@ const Markets = () => {
     if (editing) {
       setMarketEditing(editing);
     } else {
-      setMarketEditing({ field: '', id: '' });
+      setMarketEditing({ field: '', id: '', account_id: '' });
     }
   };
 
   const addMarketToList = (e: any): Promise<void> => {
-    if (!e?.target?.innerHTML) return;
-    const account_id = markets.find(m => m.name === e.target.innerHTML)._id;
+    if (!e?._id) return;
 
-    return api
-      .service('insurance/market-list')
-      .patch(selectedList._id, {
-        markets: [...selectedList.markets, { account_id }],
-      }, {
-        query: { $resolve: { markets: true } },
-      })
-      .then(res => {
-        const updatedLists = lists.map(l => {
-          return l._id === res._id
-            ? res
-            : l;
-        });
-        setLists(updatedLists);
-        setSelectedList(res);
-      });
+    editList({ markets: [...selectedList.markets, { account_id: e._id }] });
+  };
+
+  const addExisitngContact = async (id: string) => {
+    const updatedMarkets = selectedList.markets.map(m => {
+      if (m._id === marketEditing.id) {
+        return {
+          ...m,
+          contact_id: id,
+        };
+      }
+      return m;
+    });
+
+    editList({ markets: updatedMarkets });
+
+    setMarketEditing({ id: '', field: '', account_id: '' });
+    setMarketFieldModal(false);
+  };
+
+  const addNewContact = async (data: Record<string, string>) => {
+    const contact = await api.service('market/contact').create({
+      account_id: user.details.account_id,
+      reinsurer_account_id: marketEditing.account_id,
+      name: data.name,
+      title: data.title,
+      email: data.email,
+      phone: data.phone,
+    });
+
+    addExisitngContact(contact._id);
   };
 
   const editMarketField = async (value: any, remove?: boolean) => {
@@ -129,14 +118,11 @@ const Markets = () => {
         .filter(m => m._id !== value)
         .map(m => {
           const market = _.cloneDeep(m);
-          delete market.account;
           return market;
         });
     } else {
       var updatedMarkets = selectedList.markets.map(m => {
         const market = _.cloneDeep(m);
-
-        delete market.account;
 
         if (market._id === marketEditing.id) {
           return {
@@ -149,19 +135,9 @@ const Markets = () => {
       });
     }
 
-    const updatedList = await api.service('insurance/market-list').patch(selectedList._id, {
-      markets: updatedMarkets,
-    }, { query: { $resolve: { markets: true } } });
+    editList({ markets: updatedMarkets });
 
-    const updatedLists = lists.map(l => {
-      return l._id === updatedList._id
-        ? updatedList
-        : l;
-    });
-
-    setSelectedList(updatedList);
-    setLists(updatedLists);
-    setMarketEditing({ id: '', field: '' });
+    setMarketEditing({ id: '', field: '', account_id: '' });
     setMarketFieldModal(false);
   };
 
@@ -170,22 +146,30 @@ const Markets = () => {
   }
 
   const fetchData = async () => {
-    await Promise.all([fetchLists(), fetchMarkets()]);
+    await Promise.all([fetchMarkets()]);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+    if (!selectedList) {
+      setSelectedList(market.lists[0] ?? null);
+    } else {
+      const list = market.lists.find(l => l._id === selectedList._id);
+      setSelectedList(list ?? null);
+    }
+  }, [market.lists]);
 
   return (
     <View
+      addExisitngContact={addExisitngContact}
       addMarketToList={addMarketToList}
+      addNewContact={addNewContact}
       createList={createList}
       deleteList={deleteList}
       deleteMarket={deleteMarket}
       editMarketField={editMarketField}
-      lists={lists}
+      lists={market.lists}
       marketEditing={marketEditing}
       marketFieldModal={marketFieldModal}
       selectList={selectList}

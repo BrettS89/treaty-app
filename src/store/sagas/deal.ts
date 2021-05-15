@@ -65,7 +65,7 @@ interface CreateDealHandlerProps {
 function * createDealHandler({ payload: { data, navigate, setComponent } }: CreateDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
-    const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true } }})
+    const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true, timeline: true } }})
     const deal = yield call(createDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -76,6 +76,7 @@ function * createDealHandler({ payload: { data, navigate, setComponent } }: Crea
     setComponent();
     navigate('/app/broker/my-deals/' + deal._id);
   } catch(e) {
+    console.log('error here');
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
     yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
   }
@@ -92,7 +93,10 @@ function * brokerGetMyDealsHandler() {
         user_id: userState.details._id,
         $sort: { createdAt: -1 },
         $limit: 1000,
-        $resolve: { details: true },
+        $resolve: {
+          details: true,
+          timeline: true,
+        },
       },
     };
     
@@ -117,7 +121,7 @@ interface EditDealHandlerProps {
 function * editDealHandler ({ payload:{ _id, data } }: EditDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
-    const editDeal = () => app.service('insurance/deal').patch(_id, data, { query: { $resolve: { details: true } }});
+    const editDeal = () => app.service('insurance/deal').patch(_id, data, { query: { $resolve: { details: true, timeline: true } }});
     const deal = yield call(editDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -185,7 +189,7 @@ function * searchDealsHandler({ payload }: SearchDealsProps) {
     const query = {
       query: {
         account_id: payload,
-        $resolve: { deal: true },
+        $resolve: { deal: true, timeline: true },
         $sort: { createdAt: -1 },
         $limit: 1000,
       },

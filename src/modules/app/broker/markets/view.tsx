@@ -5,7 +5,9 @@ import ConfigureList from './components/configure-list';
 import EditFieldModal from './components/edit-field-modal';
 
 const View = ({ 
+  addExisitngContact,
   addMarketToList,
+  addNewContact,
   createList,
   deleteList,
   deleteMarket,
@@ -94,10 +96,13 @@ const View = ({
         </div>
       </div>
       <EditFieldModal
+        addExisitngContact={addExisitngContact}
+        addNewContact={addNewContact}
         editMarketField={editMarketField}
         isOpen={marketFieldModal}
         marketEditing={marketEditing}
         setIsOpen={setMarketFieldModal}
+        list={selectedList}
       />
     </div>
   );

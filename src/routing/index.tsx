@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Home from '../modules/landing/home';
 import Login from '../modules/auth/login';
@@ -9,7 +9,8 @@ import MyDeals from '../modules/app/broker/my-deals';
 import Markets from '../modules/app/broker/markets';
 import CreateDeal from '../modules/app/broker/create-deal';
 import Deal from '../modules/app/broker/deal';
-import Manage from '../modules/app/broker/manage';
+import Chat from '../modules/app/broker/chat';
+import Manage from '../modules/app/broker/manage'
 
 // reinsurer components
 import reinsurerDashboard from '../modules/app/reinsurer/dashboard';
@@ -27,6 +28,7 @@ export default () => {
       <Route exact path="/app/reinsurer/dashboard" component={reinsurerDashboard} />
       
       <Route exact path="/app/broker/my-deals/manage/:id" component={Manage} />
+      <Route exact path="/app/broker/my-deals/chat/:id" component={Chat} />
       <Route exact path="/app/broker/my-deals/:id" component={Deal} />
       <Route exact path="/app/broker/create-deal" component={CreateDeal} />
       <Route exact path="/app/broker/markets" component={Markets} />

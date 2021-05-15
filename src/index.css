@@ -65,3 +65,11 @@ code {
 .hover:hover {
   cursor: pointer;
 }
+
+.color-blue {
+  color: #069CEC;
+}
+
+.full-width {
+  width: 100%;
+}

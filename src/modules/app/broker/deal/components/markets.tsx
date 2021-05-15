@@ -55,7 +55,7 @@ const DealMarkets = ({ deal, lists, marketNotes, updateMarketList, upsertMarketN
     ? (
       <div>
         <div className="Deal-markets-top">
-          <Typography variant="h6" style={{ marginRight: 10 }}>
+          <Typography variant="h6" className="Deal-market-list-name">
             {list.name}
           </Typography>
           {renderRemove()}
@@ -70,10 +70,16 @@ const DealMarkets = ({ deal, lists, marketNotes, updateMarketList, upsertMarketN
       <Autocomplete
         id="combo-box-demo"
         size="small"
-        style={{ width: 400 }}
+        className="Deal-markets-autocomplete"
         options={lists}
         getOptionLabel={(option: any) => option.name}
-        renderInput={(params) => <TextField size="small" {...params} label="Select a market list" variant="outlined" />}
+        renderInput={(params) => (
+          <TextField
+            size="small" {...params}
+            label="Select a market list"
+            variant="outlined"
+          />
+        )}
         onChange={(event, newValue) => updateMarketList(newValue)}
       />
     </div>

@@ -254,7 +254,7 @@ const Deal = (props: any) => {
       upsertMarketNote={upsertMarketNote}
     />
   )
-  : <div></div>
+  : <div>Loading...</div>
 };
 
 export default authorization(Deal);

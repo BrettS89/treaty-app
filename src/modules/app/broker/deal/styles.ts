@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     width: 600,
   },
   rightNavLink: {
-    fontWeight: 600
+
   },
   treatyType: {
     padding: 15,

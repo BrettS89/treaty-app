@@ -12,6 +12,8 @@ const MyDeals = (props) => {
       props.history.push('/app/broker/my-deals/manage/' + _id);
     } else if (screen === 'edit') {
       props.history.push('/app/broker/my-deals/' + _id);
+    } else if (screen === 'chat') {
+      props.history.push('/app/broker/my-deals/chat/' + _id);
     }
   };
 

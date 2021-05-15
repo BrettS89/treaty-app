@@ -150,3 +150,33 @@
   display: flex;
   align-items: center;
 }
+
+.Deal-markets-autocomplete {
+  width: 400px;
+}
+
+.Deal-market-list-name {
+  margin-right: 10px;
+}
+
+.Deal-market-notes-button {
+  margin-top: 7px;
+}
+
+.Deal-market-notes-market-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.Deal-market-toprow-name {
+  width: 200px;
+}
+
+.Deal-market-contact {
+  max-width: 120px;
+  min-width: 120px;
+}
+
+.Deal-market-notes-static {
+  font-size: 13px;
+}

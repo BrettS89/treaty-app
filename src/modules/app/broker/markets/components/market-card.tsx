@@ -5,23 +5,30 @@ import TableRow from '@material-ui/core/TableRow';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
 const MarketCard = ({ deleteMarket, market, setMarketFieldModal }) => {
-  const marketData = {
+  const marketData = market?.contact ?? {
     name: 'Click to edit',
-    email: 'Click to edit',
-    phone: 'Click to edit',
-    ...market,
+    email: '',
+    phone: '',
   };
 
   const renderField = (field: string): JSX.Element => {
+    if (field === 'name') {
+      return (
+        <div className="market-list-field color-blue hover">
+          <span onClick={() => selectField(field)}>{marketData[field]}</span>
+        </div>
+      );
+    }
     return (
       <div className="market-list-field">
-        <span onClick={() => selectField(field)}>{marketData[field]}</span>
+        <span>{marketData[field]}</span>
       </div>
     );
+    
   };
 
   const selectField = (field: string): void => {
-    setMarketFieldModal(true, { field, id: market._id });
+    setMarketFieldModal(true, { field, id: market._id, account_id: market.account_id });
   };
 
   return (
@@ -31,6 +38,7 @@ const MarketCard = ({ deleteMarket, market, setMarketFieldModal }) => {
           {market.account.name}
         </TableCell>
         <TableCell align="right"><div>{renderField('name')}</div></TableCell>
+        <TableCell align="right"><div>{renderField('title')}</div></TableCell>
         <TableCell align="right"><div>{renderField('email')}</div></TableCell>
         <TableCell align="right">{renderField('phone')}</TableCell>
         <TableCell
