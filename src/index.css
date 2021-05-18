@@ -4,6 +4,7 @@
   font-weight: 400;
 }
 
+
 @font-face {
   font-family: 'Proxima Nova';
   src: local('Proxima'), url(./fonts/Proxima/Proxima-Nova-Semi-Bold.otf) format('opentype');

@@ -7,7 +7,7 @@ import { formatDate } from '../../../../../utilities/helpers';
 
 interface ReDealCardProps {
   deal: DealType;
-  navigateToDeal(_id: string): void;
+  navigateToDeal(_id: string, timeline: boolean): void;
 }
 
 const DealCard = (props: ReDealCardProps) => {
@@ -37,14 +37,14 @@ const DealCard = (props: ReDealCardProps) => {
         </div>
       </div>
 
-      <div>
+      <div className="ReDealCard-insurance-details">
         <Typography className={classes.company} color="primary">Insurance details</Typography>
         <KeyValue keyString="Projected Premium:" valueString={projectedPremium} />
         <KeyValue keyString="Projected Loss Ratio:" valueString={lossRation} />
         <KeyValue keyString="Effective Date" valueString={formatDate(deal.effective_date)} />
       </div>
 
-      <div>
+      <div className="ReDealCard-broker">
         <Typography className={classes.company} color="primary">Broker</Typography>
         <Typography>{`${deal.user.firstname} ${deal.user.lastname}`}</Typography>
         <Typography className={classes.title}>{deal.user.account.name}</Typography>
@@ -55,9 +55,17 @@ const DealCard = (props: ReDealCardProps) => {
           color="primary"
           variant='contained'
           disableElevation
-          onClick={() => navigateToDeal(deal._id)}
+          onClick={() => navigateToDeal(deal._id, false)}
         >
           View
+        </Button>
+        <Button
+          color="primary"
+          style={{ marginLeft: 15, fontWeight: 600 }}
+          disableElevation
+          onClick={() => navigateToDeal(deal._id, true)}
+        >
+          Timeline
         </Button>
       </div>
     </div>

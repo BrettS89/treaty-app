@@ -7,8 +7,13 @@ import View from './view';
 const SearchDeals = (props: any) => {
   const deals = useSelector((state: StoreState) => state.deal);
 
-  const navigateToDeal = (_id: string): void => {
-    props.history.push('/app/reinsurer/search-deals/' + _id);
+  const navigateToDeal = (_id: string, timeline: boolean = false): void => {
+    if (timeline) {
+      props.history.push('/app/reinsurer/search-deals/timeline/' + _id);
+    } else {
+      props.history.push('/app/reinsurer/search-deals/' + _id);
+    }
+    
   };
   
   return (

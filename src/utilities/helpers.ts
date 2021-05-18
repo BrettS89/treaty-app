@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -10,4 +12,15 @@ export const formatDollarAmount = (n: number): string => {
 export const formatDate = (date: string): string => {
   const d = date.split('-');
   return `${d[1]}-${d[2]}-${d[0]}`;
+};
+
+export const buildTimeline = (effectiveDate: string) => {
+  const dateArr = effectiveDate.split('-');
+  const formattedEffectiveDate = `${dateArr[1]}-${dateArr[2]}-${dateArr[0]}`;
+
+  const daysBack = [7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77];
+
+  return daysBack.reduce((acc, curr) => {
+    return [...acc, moment(formattedEffectiveDate, 'MM-DD-YYYY').subtract(curr, 'days').format('MM-DD-YYYY')]
+  }, [formattedEffectiveDate]).reverse();
 };

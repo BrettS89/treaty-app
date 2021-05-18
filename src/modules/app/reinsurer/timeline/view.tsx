@@ -1,13 +1,12 @@
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import DateCard from '../../../../components/timeline/date-card';
-import TaskCard from './components/task-card';
 import Key from '../../../../components/timeline/key';
-import UpdateStatusModal from './components/update_status_modal';
+import TaskCard from './components/task-card';
 import { buildTimeline } from '../../../../utilities/helpers';
 
 const dates = ['10-15-2021', '10-22-2021', '10-29-2021', '11-05-2021', '11-12-2021', '11-19-2021', '11-26-2021', '12-3-2021', '12-10-2021', '12-17-2021', '12-24-2021', '12-31-2021'];
 
-const ManageView = ({ closeUpdateModal, deal, openUpdateModal, updateModalOpen, updateTimelineStatus }) => {
+const TimelineView = ({ deal }) => {
   const timeline = buildTimeline(deal.effective_date);
 
   const renderDates = () => timeline.map(d => (
@@ -25,11 +24,10 @@ const ManageView = ({ closeUpdateModal, deal, openUpdateModal, updateModalOpen, 
         index={i}
         task={task}
         key={i}
-        openUpdateModal={openUpdateModal}
       />
     ));
   };
-  
+
   return (
     <div className="Manage">
       <Typography variant="h4" className="title">
@@ -87,13 +85,8 @@ const ManageView = ({ closeUpdateModal, deal, openUpdateModal, updateModalOpen, 
           </div>
         </div>
       </div>
-      <UpdateStatusModal
-        isOpen={updateModalOpen}
-        closeModal={closeUpdateModal}
-        updateTimelineStatus={updateTimelineStatus}
-      />
     </div>
   );
 };
 
-export default ManageView;
+export default TimelineView;

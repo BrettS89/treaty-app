@@ -13,6 +13,7 @@ import Chat from '../modules/app/broker/chat';
 import Manage from '../modules/app/broker/manage'
 
 // reinsurer components
+import Timeline from '../modules/app/reinsurer/timeline';
 import reinsurerDashboard from '../modules/app/reinsurer/dashboard';
 import reinsurerDeals from '../modules/app/reinsurer/my-deals';
 import SearchDeals from '../modules/app/reinsurer/search-deals';
@@ -21,6 +22,8 @@ import ReDeal from '../modules/app/reinsurer/deal';
 export default () => {
   return (
     <Switch>
+      <Route exact path="/app/reinsurer/search-deals/timeline/:id" component={Timeline} />
+      <Route exact path="/app/reinsurer/my-deals/timeline/:id" component={Timeline} />
       <Route exact path="/app/reinsurer/my-deals/:id" component={ReDeal} />
       <Route exact path="/app/reinsurer/search-deals/:id" component={ReDeal} />
       <Route exact path="/app/reinsurer/search-deals" component={SearchDeals} />

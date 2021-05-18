@@ -5,7 +5,7 @@ import { Deal as DealType } from '../../../../types/services/insurance';
 
 interface SearchDealsProps {
   deals: DealType[];
-  navigateToDeal(_id: string): void;
+  navigateToDeal(_id: string, timeline: boolean): void;
 }
 
 const View = (props: SearchDealsProps) => {

@@ -18,8 +18,17 @@
 .ReDealCard-left {
   display: flex;
   align-items: center;
+  width: 450px;
 }
 
 .ReDealCard-insurance {
   margin-left: 50px;
+}
+
+.ReDealCard-insurance-details {
+  width: 350px;
+}
+
+.ReDealCard-broker {
+  width: 250px;
 }

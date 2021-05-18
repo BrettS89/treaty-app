@@ -6,7 +6,7 @@ import useStyles from './styles';
 
 interface MyDealsViewProps {
   deals: DealType[];
-  navigateToDeal(str: string): void;
+  navigateToDeal(str: string, timeline: boolean): void;
 }
 
 const View: FC<MyDealsViewProps> = ({ deals, navigateToDeal }) => {

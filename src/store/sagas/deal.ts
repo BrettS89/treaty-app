@@ -15,6 +15,7 @@ export default [
   getDealsFollowingWatcher,
   followDealWatcher,
   unfollowDealWatcher,
+  updateTimelineWatcher,
 ];
 
 function * createDealWatcher() {
@@ -47,6 +48,10 @@ function * followDealWatcher() {
 
 function * unfollowDealWatcher() {
   yield takeLatest(ActionTypes.UNFOLLOW_DEAL, unfollowDealHandler);
+}
+
+function * updateTimelineWatcher() {
+  yield takeLatest(ActionTypes.UPDATE_TIMELINE, updateTimelineHandler);
 }
 
 interface CreateDealHandlerProps { 
@@ -276,5 +281,41 @@ function * unfollowDealHandler({ payload }: UnfollowDealHandlerProps) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch(e) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  }
+}
+
+interface UpdateTimelineProps {
+  type: string;
+  payload: {
+    deal_id: string;
+    field: string;
+    row: string;
+    status: string;
+    _id: string
+  },
+}
+
+function * updateTimelineHandler({ payload: { deal_id, field, row, status, _id } }: UpdateTimelineProps) {
+  try {
+    console.log(status);
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const dealState = yield select(dealSelector);
+    const myDealsClone = _.cloneDeep(dealState.myDeals);
+    const timeline = myDealsClone.find(d => d._id === deal_id)?.timeline;
+    if (!timeline) throw new Error('Cannot find timeline');
+    const task = timeline[field][row].find(task => task._id === _id);
+    task.status = status;
+    const fn = () => app.service('insurance/timeline').patch(timeline._id, { [field]: timeline[field] });
+    const updatedTimeline = yield call(fn);
+    const updatedDeals = myDealsClone.map(deal => {
+      return deal_id === deal._id
+        ? { ...deal, timeline: updatedTimeline }
+        : deal;
+    });
+    yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+  } catch (e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+    yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
   }
 }

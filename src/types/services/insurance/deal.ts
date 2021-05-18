@@ -25,5 +25,6 @@ export interface Deal extends Partial<Resource> {
   executive_summary?: string;
   additional_details?: string;
   territories?: string[];
+  timeline: any;
   user?: User;
 }
