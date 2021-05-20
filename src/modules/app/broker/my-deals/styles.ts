@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   title: {
-    marginBottom: 20,
+    marginBottom: 15,
     fontWeight: 600
   },
   dealTitle: {

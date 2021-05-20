@@ -80,11 +80,14 @@ const Deal = (props: any) => {
   };
 
   const addDetail = (e: any): void => {
-    const key = e.target.value;
+    const key = e.target.value.split('&')[0];
+    const display_text = e.target.value.split('&')[1];
+    console.log(key, display_text);
 
     app.service('insurance/detail')
       .create({
         deal_id: deal._id,
+        display_text,
         key,
         value: 'default',
       })

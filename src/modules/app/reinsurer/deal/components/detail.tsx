@@ -31,7 +31,7 @@ const Details: FC<DetailsProps> = ({ deal, section, title }) => {
       .filter((d) => table[d.key])
       .map((detail, i) => (
         <div className="ReDeal-details-display" style={i % 2 !== 0 ? { backgroundColor: '#F6F7FB', borderRadius: 3  } : {  }}>
-          <Typography className={classes.detailsSectionKey}>{detail.key}:</Typography>
+          <Typography className={classes.detailsSectionKey}>{detail.display_text}:</Typography>
           <Typography>{detail.value}</Typography>
         </div>
       ));

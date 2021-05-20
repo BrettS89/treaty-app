@@ -38,11 +38,12 @@ const useStyles = makeStyles(theme => ({
   },
   detailKey: {
     fontWeight: 600,
-    fontSize: 15
+    fontSize: 15,
+    color: 'grey',
   },
   detailValue: {
     fontSize: 15,
-    marginLeft: 7,
+    marginLeft: 15,
   },
   detailInput: {
     width: 250,

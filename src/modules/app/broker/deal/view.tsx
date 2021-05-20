@@ -6,6 +6,7 @@ import TreatyDetails from './components/treaty-details';
 import DetailSection from './components/detail-section';
 import Territory from './components/territory';
 import DealMarkets from './components/markets';
+import Files from './components/files';
 
 interface DealViewProps {
   addDetail(arg: any): void;
@@ -37,7 +38,7 @@ const View = (props: DealViewProps) => {
     if (editing !== 'title') {
       return (
         <div className="Deal-row Deal-title">
-          <Typography variant="h4" className="title">
+          <Typography variant="h5" className="title">
             {deal.title}
           </Typography>
           <Button
@@ -81,7 +82,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-row Deal-title-less-margin">
           <div className="Deal-row">
-            <Typography variant="h6" className="title">
+            <Typography className="title grey">
               Insurance company:
             </Typography>
             <TextField
@@ -112,7 +113,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-row Deal-title-less-margin">
         <div className="Deal-row">
-          <Typography variant="h6" className="title">
+          <Typography className="title grey">
             Insurance company:
           </Typography>
           <Typography className={classes.leftMargin}>
@@ -135,7 +136,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-row Deal-title-less-margin">
           <div className="Deal-row">
-            <Typography variant="h6" className="title">
+            <Typography className="title grey">
               Insurance type:
             </Typography>
             <TextField
@@ -166,7 +167,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-row Deal-title-less-margin">
         <div className="Deal-row">
-          <Typography variant="h6" className="title">
+          <Typography className="title grey">
             Insurance type:
           </Typography>
           <Typography className={classes.leftMargin}>
@@ -189,7 +190,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-row Deal-title">
           <div className="Deal-row">
-            <Typography variant="h6" className="title">
+            <Typography className="title grey">
               Business covered:
             </Typography>
             <TextField
@@ -220,7 +221,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-row Deal-title">
         <div className="Deal-row">
-          <Typography variant="h6" className="title">
+          <Typography className="title grey">
             Business covered:
           </Typography>
           <Typography className={classes.leftMargin}>
@@ -243,7 +244,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-summary">
           <div className="Deal-summary-title">
-            <Typography variant="h6" className="title">
+            <Typography className="title grey">
               AdditionalDetails
             </Typography>
             <Button
@@ -276,7 +277,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-summary">
         <div className="Deal-summary-title">
-          <Typography variant="h6" className="title">
+          <Typography className="title grey">
             Additional details
           </Typography>
           <Button
@@ -300,7 +301,7 @@ const View = (props: DealViewProps) => {
       return (
         <div className="Deal-summary">
           <div className="Deal-summary-title">
-            <Typography variant="h6" className="title">
+            <Typography className="title grey">
               Executive Summary
             </Typography>
             <Button
@@ -332,7 +333,7 @@ const View = (props: DealViewProps) => {
     return (
       <div className="Deal-summary">
         <div className="Deal-summary-title">
-          <Typography variant="h6" className="title">
+          <Typography className="title grey">
             Executive Summary
           </Typography>
           <Button
@@ -404,6 +405,11 @@ const View = (props: DealViewProps) => {
             updateTerritory={updateTerritory}
           />
         );
+
+      case 'Files':
+        return (
+          <Files />
+        )
 
       case 'Markets':
         return (

@@ -11,7 +11,7 @@ interface DetailProps {
 }
 
 const Detail = (props: DetailProps) => {
-  const { detail: { _id, key, value }, editingDetail, onSaveField, setEditedValue, setEditingDetail } = props;
+  const { detail: { _id, display_text, key, value }, editingDetail, onSaveField, setEditedValue, setEditingDetail } = props;
   const classes = useStyles();
 
   const onCancelEdit = (): void => {
@@ -25,7 +25,7 @@ const Detail = (props: DetailProps) => {
         <div className="Detail">
           <div className="Detail-content">
             <Typography className={classes.detailKey}>
-              {key}:
+              {display_text}:
             </Typography>
             <TextField
               className={classes.detailInput}
@@ -58,7 +58,7 @@ const Detail = (props: DetailProps) => {
       <div className="Detail">
         <div className="Detail-content">
           <Typography className={classes.detailKey}>
-            {key}:
+            {display_text}:
           </Typography>
           <Typography className={classes.detailValue}>
             {value}

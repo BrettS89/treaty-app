@@ -39,7 +39,7 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false
     if (chat) {
       return (
         <div className="Deal-right-nav-link" style={{ display: 'flex' }} onClick={() => setSideComponent('Chat')}>
-          <Typography style={{ color: setColor('Chat') }} className={classes.rightNavLink}>Chat</Typography>
+          <Typography style={{ color: setColor('Chat'), fontSize: 15 }} className={classes.rightNavLink}>Chat</Typography>
           {renderBadge()}
         </div>
       );
@@ -50,7 +50,7 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false
     if (markets) {
       return (
         <div className="Deal-right-nav-link" style={{ display: 'flex' }} onClick={() => setSideComponent('Markets')}>
-          <Typography style={{ color: setColor('Markets') }} className={classes.rightNavLink}>Markets</Typography>
+          <Typography style={{ color: setColor('Markets'), fontSize: 15 }} className={classes.rightNavLink}>Markets</Typography>
         </div>
       );
     }
@@ -59,23 +59,23 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false
   return (
     <div className="Deal-right-nav">
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('TreatyInformation')}>
-        <Typography style={{ color: setColor('TreatyInformation') }} className={classes.rightNavLink}>Treaty Info</Typography>
+        <Typography style={{ color: setColor('TreatyInformation'), fontSize: 15 }} className={classes.rightNavLink}>Treaty Info</Typography>
       </div>
 
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('GeneralTerms')}>
-        <Typography style={{ color: setColor('GeneralTerms') }} className={classes.rightNavLink}>General Terms</Typography>
+        <Typography style={{ color: setColor('GeneralTerms'), fontSize: 15 }} className={classes.rightNavLink}>General Terms</Typography>
       </div>
 
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('Expenses')}>
-        <Typography style={{ color: setColor('Expenses') }} className={classes.rightNavLink}>Expenses</Typography>
+        <Typography style={{ color: setColor('Expenses'), fontSize: 15 }} className={classes.rightNavLink}>Expenses</Typography>
       </div>
 
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('Territory')}>
-        <Typography style={{ color: setColor('Territory') }} className={classes.rightNavLink}>Territory</Typography>
+        <Typography style={{ color: setColor('Territory'), fontSize: 15 }} className={classes.rightNavLink}>Territory</Typography>
       </div>
 
-      <div className="Deal-right-nav-link" onClick={() => setSideComponent('TreatyInformation')}>
-        <Typography className={classes.rightNavLink}>Files</Typography>
+      <div className="Deal-right-nav-link" onClick={() => setSideComponent('Files')}>
+        <Typography style={{ fontSize: 15 }} className={classes.rightNavLink}>Files</Typography>
       </div>
       {renderMarkets()}
       {renderChat()}

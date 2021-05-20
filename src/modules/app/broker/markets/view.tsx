@@ -60,7 +60,7 @@ const View = ({
   return (
     <div className="Markets">
       <div style={{ marginBottom: 15 }}>
-        <Typography variant="h4" className="title">
+        <Typography variant="h5" className="title">
           Markets
         </Typography>
       </div>
@@ -85,7 +85,7 @@ const View = ({
         </div>
 
         <div className="Markets-main-manage">
-          <div className="Markets-main-lists-header">
+          <div className="Markets-main-lists-header" style={{ marginBottom: 13 }}>
             <Typography variant="h6" className={classes.subHeader}>
               Configure market list
             </Typography>

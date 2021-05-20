@@ -34,7 +34,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: scroll!important;
 }
 
 .Manage-chat-content-messages-list {
@@ -42,7 +41,7 @@
   flex-direction: column;
   flex-grow: 1;
   height: 400px;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 .Manage-chat-content-messages-message {

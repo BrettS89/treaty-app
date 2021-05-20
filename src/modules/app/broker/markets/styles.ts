@@ -2,8 +2,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   subHeader: {
-    fontWeight: 600,
-  },
+    fontSize: 17  },
   editButton: {
     marginLeft: 10,
   }

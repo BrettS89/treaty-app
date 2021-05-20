@@ -36,7 +36,7 @@ const ConfigureList = ({ addMarketToList, deleteList, deleteMarket, list, setMar
     if (!editingName) {
       return (
         <div className="configure-list-name">
-          <Typography variant="h5">{list.name}</Typography>
+          <Typography variant="h6">{list.name}</Typography>
           <Button 
             className={classes.editButton}
             color="primary"

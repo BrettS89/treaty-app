@@ -31,8 +31,8 @@ const ManageView = ({ closeUpdateModal, deal, openUpdateModal, updateModalOpen, 
   };
   
   return (
-    <div className="Manage">
-      <Typography variant="h4" className="title">
+    <div className="Manage-timeline">
+      <Typography variant="h5" className="title">
         {deal.title}
       </Typography>
       <div className="Manage-content">

@@ -30,7 +30,7 @@ const View = (props: ReDealProps) => {
       return (
         <Button
           color="primary"
-          style={{ fontWeight: 600, fontSize: 16 }}
+          style={{ fontSize: 16 }}
           onClick={unFollowDeal}
         >
           Unfollow
@@ -41,7 +41,7 @@ const View = (props: ReDealProps) => {
     return (
       <Button
         color="primary"
-        style={{ fontWeight: 600, fontSize: 16 }}
+        style={{ fontSize: 16 }}
         onClick={followDeal}
       >
         Follow
@@ -104,7 +104,7 @@ const View = (props: ReDealProps) => {
   return (
     <div className="ReDeal">
       <div className="ReDeal-top">
-        <Typography variant="h4" className="title ReDeal-title">
+        <Typography variant="h5" className="title ReDeal-title">
           {deal.title}
         </Typography>
         {renderFollowing()}
@@ -141,7 +141,7 @@ const View = (props: ReDealProps) => {
             </div>
           </div>
 
-          <div className="ReDeal-content-summar">
+          <div className="ReDeal-content-summary">
             <Typography className={classes.summaryTitles}>
               Additional Details
             </Typography>

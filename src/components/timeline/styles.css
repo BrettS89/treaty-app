@@ -25,11 +25,14 @@
   margin-right: 10px;
 }
 
-.Manage {
+.Manage-timeline {
+  display: flex;
+  flex-direction: column;
   background-color: #F6F7FB;
   padding: 20px;
-  width: 100%;
-  flex-grow: 1;
+  flex-grow: 2;
+  overflow-y: auto;
+  height: 300px;
 }
 
 .Manage-content {
@@ -38,7 +41,7 @@
   flex-grow: 1;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  margin-top: 20px;
+  margin-top: 15px;
   border-radius: 4px;
   padding: 20px;
 }
@@ -49,7 +52,7 @@
 }
 
 .Manage-content-top-title {
-  font-weight: 600!important;
+
 }
 
 .Manage-content-keys {
@@ -64,11 +67,12 @@
   margin-bottom: 10px;
 }
 
-.Manage-content-timeline-row{
+.Manage-content-timeline-row {
   display: flex;
   align-items: center;
   width: 100%;
-  font-size: 14px;
+  font-size: 13px;
+  text-align: center;
   font-weight: 600;
 }
 

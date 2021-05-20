@@ -14,7 +14,7 @@ function App() {
         <Header />
         <div className="App-main">
           <Sidebar />
-          <div style={{ flexGrow: 1, display: 'flex', marginTop: 64 }}>
+          <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', marginTop: 64 }}>
             <Router />
           </div>
           <ErrorMessage />

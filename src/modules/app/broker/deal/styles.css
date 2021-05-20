@@ -1,12 +1,15 @@
 .Deal {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 20px;
-  width: 100%;
-  max-height: 100%;
-  overflow: scroll!important;
+  height: 300px;
+  overflow-y: auto;
 }
 
 .Deal-content {
   display: flex;
+  flex-grow: 1;
 }
 
 .Deal-left {
@@ -20,11 +23,13 @@
 
 .Deal-right-nav {
   display: flex;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .Deal-right-nav-link {
   margin-right: 30px;
+  margin-bottom: 10px;
   color: grey;
 }
 
@@ -53,7 +58,7 @@
 }
 
 .Deal-title {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .Deal-title-less-margin {
@@ -70,6 +75,7 @@
 
 .Deal-summary-title {
   display: flex;
+  align-items: center;
 }
 
 .Deal-treaty-type {
@@ -88,7 +94,7 @@
 }
 
 .Detail {
-  width: 500px;
+  width: 100%;
   border-bottom: 1px solid #e0e0e0;
   display: flex;
   align-items: center;
@@ -113,9 +119,9 @@
 }
 
 .Deal-territories-name {
-  width: 130px;
+  width: 110px;
   margin-left: 15px;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .Deal-territories-top {

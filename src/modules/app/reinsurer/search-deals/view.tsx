@@ -22,7 +22,7 @@ const View = (props: SearchDealsProps) => {
 
   return (
     <div className="SearchDeals">
-      <Typography variant="h4" className={classes.pageTitle}>
+      <Typography variant="h5" className={classes.pageTitle}>
         Search Deals
       </Typography>
       <div>

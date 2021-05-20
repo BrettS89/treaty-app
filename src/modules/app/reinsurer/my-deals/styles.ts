@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles({
   pageTitle: {
     fontWeight: 600,
-    marginBottom: 20,
+    marginBottom: 15,
   },
   title: {
     fontWeight: 600,

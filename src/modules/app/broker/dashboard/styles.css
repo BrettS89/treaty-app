@@ -1,5 +1,9 @@
 .Dashboard {
   background-color: #F6F7FB;
   padding: 20px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 10px;
+  overflow-y: auto;
 }

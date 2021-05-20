@@ -1,7 +1,14 @@
 .MyDeals {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 20px;
   background-color: #F6F7FB;
-  width: 100%;
+}
+
+.MyDeals-deals {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .DealCard {

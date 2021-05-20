@@ -10,8 +10,16 @@ export const formatDollarAmount = (n: number): string => {
 };
 
 export const formatDate = (date: string): string => {
-  const d = date.split('-');
+  const roughDate = date.includes('T')
+    ? date.split('T')[0]
+    : date;
+
+  const d = roughDate.split('-');
   return `${d[1]}-${d[2]}-${d[0]}`;
+};
+
+export const formatDateTime = (isoDateTime: string): string => {
+  return moment(isoDateTime, moment.ISO_8601).local().format('MM-DD-YYYY hh:mm a')
 };
 
 export const buildTimeline = (effectiveDate: string) => {

@@ -202,6 +202,7 @@ function * searchDealsHandler({ payload }: SearchDealsProps) {
 
     const fn = () => app.service('insurance/access').find(query);
     const deals = yield call(fn);
+
     const dealState = yield select(dealSelector);
     yield put({ type: ActionTypes.SET_ACCESSIBLE_DEALS, payload: [...dealState.accessibleDeals, ...deals.data] });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });

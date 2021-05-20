@@ -61,7 +61,7 @@ const DetailSection: FC<TreatyInformationProps> = ({ addDetail, deal, menuOption
             label="Add details"
             onChange={addDetail}
           >
-            {menuOptions.map(m => <MenuItem value={m.value}>{m.name}</MenuItem>)}
+            {menuOptions.map(m => <MenuItem value={`${m.value}&${m.name}`}>{m.name}</MenuItem>)}
           </Select>
         </FormControl>
       </div>

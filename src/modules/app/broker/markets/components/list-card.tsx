@@ -7,7 +7,7 @@ const ListCard = ({ list, selectedList, selectList }) => {
 
   return (
     <div className="Markets-list-card" onClick={() => selectList(list)}>
-      <Typography color={color} className="Manage-chat-companies-company-name">
+      <Typography color={color} style={{ fontWeight: 600, fontSize: 15 }}>
         {list.name}
       </Typography>
       <span className="Markets-list-card-markets">

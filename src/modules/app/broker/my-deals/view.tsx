@@ -22,10 +22,10 @@ const View = (props: MyDealsProps) => {
   
   return (
     <div className="MyDeals">
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="h5" className={classes.title}>
         My deals
       </Typography>
-      <div>
+      <div className="MyDeals-deals">
         {renderMyDeals()}
       </div>
     </div>

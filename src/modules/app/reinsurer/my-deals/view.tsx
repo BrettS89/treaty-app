@@ -22,7 +22,7 @@ const View: FC<MyDealsViewProps> = ({ deals, navigateToDeal }) => {
 
   return (
     <div className="reinsurerDeals">
-      <Typography variant="h4" className={classes.pageTitle}>
+      <Typography variant="h5" className={classes.pageTitle}>
         My Deals
       </Typography>
       <div>

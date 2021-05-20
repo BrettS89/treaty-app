@@ -1,5 +1,6 @@
 import { Typography } from '@material-ui/core';
 import useStyles from '../styles';
+import { formatDateTime } from '../../../../../utilities/helpers';
 
 const Message = ({ message, userId }) => {
   const classes = useStyles();
@@ -15,7 +16,7 @@ const Message = ({ message, userId }) => {
         color="primary"
         style={colorStyle}
       >
-        {message.user.firstname} {message.user.lastname} {message.createdAt}:
+        {message.user.firstname} {message.user.lastname} {formatDateTime(message.createdAt)}:
       </Typography>
       <Typography>
         {message.message}

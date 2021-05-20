@@ -1,5 +1,8 @@
 .reinsurerDeals {
   background-color: #F6F7FB;
   padding: 20px;
-  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow-y: auto;
 }

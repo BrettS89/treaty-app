@@ -2,6 +2,7 @@ import React from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import { Deal } from '../../../../../types/services/insurance';
 import useStyles from '../styles';
+import { formatDate } from '../../../../../utilities/helpers';
 
 interface TreatyDetailsProps {
   deal: Deal;
@@ -32,7 +33,7 @@ const TreatyDetails: React.FC<TreatyDetailsProps> = ({ deal }) => {
               <Typography className={classes.bulletKey}>Effective Date:</Typography>
             </ListItemIcon>
             <ListItemText
-              primary={`${deal.effective_date}, ${deal.contract_term}`}
+              primary={`${formatDate(deal.effective_date)}, ${deal.contract_term}`}
             />
           </ListItem>
 
