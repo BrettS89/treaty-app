@@ -5,6 +5,8 @@ import TreatyDetails from '../../broker/deal/components/treaty-details';
 import RightNav from '../../broker/deal/components/right-nav';
 import Details from './components/detail';
 import Chat from './components/chat';
+import Territories from './components/territories';
+import Files from './components/files';
 
 interface ReDealProps {
   deal: DealType;
@@ -90,6 +92,18 @@ const View = (props: ReDealProps) => {
           />
         );
 
+      case 'Territory':
+        return (
+          <Territories deal={deal} />
+        );
+
+      case 'Files':
+        return (
+          <Files
+            deal={deal}
+          />
+        );
+
       default:
         return (
           <Details
@@ -112,6 +126,17 @@ const View = (props: ReDealProps) => {
 
       <div className="ReDeal-main">
         <div className="ReDeal-content" style={{ marginRight: 10 }}>
+
+          <div className="ReDeal-insurance-overview">
+            <span className="ReDeal-insurance-overview-left">Broker:</span>
+            <span>{deal.user.firstname} {deal.user.lastname} | {deal.user.account.name}</span>
+          </div>
+
+          <div className="ReDeal-insurance-overview">
+            <span className="ReDeal-insurance-overview-left">Contact:</span>
+            <span>{deal.user.email} {deal.user.phone ? `| ${deal.user.phone}` : ''}</span>
+          </div>
+
           <div className="ReDeal-insurance-overview">
             <span className="ReDeal-insurance-overview-left">Insurance Company:</span>
             <span>{deal.insurance_company}</span>

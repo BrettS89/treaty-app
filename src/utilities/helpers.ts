@@ -1,4 +1,5 @@
 import moment from 'moment';
+import api from '../feathers';
 
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -32,3 +33,53 @@ export const buildTimeline = (effectiveDate: string) => {
     return [...acc, moment(formattedEffectiveDate, 'MM-DD-YYYY').subtract(curr, 'days').format('MM-DD-YYYY')]
   }, [formattedEffectiveDate]).reverse();
 };
+
+export const uploadFile = async (file: File, account_id: string) => {
+  const res = await api.service('storage/s3').create({ content_type: file.type });
+
+  await fetch(res.urls.upload, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': file.type,
+    },
+    body: file,
+  });
+
+  return api
+    .service('storage/file')
+    .create({
+      account_id,
+      meta: {
+        id: res.meta.id,
+        size: file.size,
+        type: file.type,
+      },
+      name: file.name,
+      urls: {
+        delivery: res.urls.delivery,
+        storage: res.urls.storage,
+      },
+    });
+};
+
+export const downloadFile = (url: string, filename: string): void => {
+  fetch(url, {
+    headers: {
+      'cache-control':'no-cache',
+    },
+  })
+    .then(response => {
+      response.blob().then(blob => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        a.click()
+      })
+    });
+};
+
+export const limitText = (str: string, limit: number): string => 
+  str.length > limit
+    ? str.slice(0, limit) + '...'
+    : str;

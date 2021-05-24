@@ -186,3 +186,53 @@
 .Deal-market-notes-static {
   font-size: 13px;
 }
+
+.deal-files-display {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.FileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  padding-top: 0;
+  border: 1px solid #e0e0e0;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  width: 162px;
+  height: 175px;
+}
+
+.FileCard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.FileCard-delete-row {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.FileCard-delete-row span {
+  height: 15px;
+  width: 15px;
+}
+
+.FileCard-format {
+  display: flex;
+  margin: 5px 0;
+}
+
+.FileCard-name {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  text-align: center;
+}

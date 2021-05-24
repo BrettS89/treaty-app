@@ -57,6 +57,17 @@ const useStyles = makeStyles(theme => ({
   removeMarketListText: {
     fontSize: 14,
     color: '#F44436'
+  },
+  fileFormat: {
+    fontSize: 14,
+    color: 'grey',
+    marginRight: 5,
+  },
+  fileType: {
+    fontSize: 14,
+  },
+  fileName: {
+    fontSize: 14,
   }
 }));
 

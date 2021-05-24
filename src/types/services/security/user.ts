@@ -9,6 +9,7 @@ export interface User extends Partial<Resource> {
   firstname: string;
   lastname: string;
   email: string;
+  phone?: string;
   role: Role;
   user: User;
 }

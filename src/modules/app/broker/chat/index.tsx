@@ -20,6 +20,7 @@ const Manage = (props: any) => {
   const [loading, setLoading] = useState(true);
 
   const formatMessages = (messages: any[], access: any[] = []) => {
+    if (!access || !access.length) return {}; 
     const accountObj = access.reduce((acc, curr) => {
       const obj = _.cloneDeep(acc);
       obj[curr.account_id] = [];

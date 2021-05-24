@@ -14,7 +14,6 @@ const Territory: FC<TerritoryProps> = ({ deal, updateTerritory }) => {
 
   const selectAll = () => {
     if (deal.territories.length !== 51) {
-      console.log(';hi')
       updateTerritory(null, null, config.states.map(s => s.abbreviation));
     } else {
       updateTerritory(null, null, [])
@@ -23,17 +22,24 @@ const Territory: FC<TerritoryProps> = ({ deal, updateTerritory }) => {
 
   const createTable = () => {
     const territories = deal.territories || [];
-    return territories.reduce((acc, curr) => {
+    const table = territories.reduce((acc, curr) => {
       return { ...acc, [curr]: true };
     }, {});
+
+    config.states.forEach(s => {
+      if (!table[s.abbreviation]) table[s.abbreviation] = false;
+    })
+
+    return table;
   };
 
   const renderTerritories = () => {
     const table = createTable();
-
+    
     return config.states.map(s => {
+      console.log(table[s.abbreviation]);
       return (
-        <div className="Deal-territories-territory">
+        <div className="Deal-territories-territory" key={s.abbreviation}>
           <Checkbox
             size="small"
             value={s.abbreviation}

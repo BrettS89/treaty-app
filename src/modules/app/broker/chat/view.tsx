@@ -9,6 +9,7 @@ const ManageView = ({ deal, currentChat, message, messages, onTypeMessage, sendM
   let messagesEnd = useRef();
 
   const scrollToBottom = () => {
+    if (!deal.access || !deal.access.length) return;
     //@ts-ignore
     messagesEnd.current.scrollIntoView({  });
   };
@@ -39,10 +40,10 @@ const ManageView = ({ deal, currentChat, message, messages, onTypeMessage, sendM
     scrollToBottom();
   }, [messages, currentChat])
 
-  return (
+  return deal.access && deal.access.length ? (
     <div className="Manage">
       <div style={{ marginBottom: 15 }}>
-        <Typography variant="h4" className="title">
+        <Typography variant="h5" className="title">
           {deal.title}
         </Typography>
       </div>
@@ -82,6 +83,18 @@ const ManageView = ({ deal, currentChat, message, messages, onTypeMessage, sendM
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  )
+  : (
+    <div className="Manage">
+      <div style={{ marginBottom: 15 }}>
+        <Typography variant="h5" className="title">
+          {deal.title}
+        </Typography>
+      </div>
+      <div>
+        Add markets to this deal to begin chatting with reinsurers
       </div>
     </div>
   );

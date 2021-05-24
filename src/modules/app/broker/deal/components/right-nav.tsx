@@ -75,7 +75,7 @@ const RightNav: FC<RightNavProps> = ({ component, setSideComponent, chat = false
       </div>
 
       <div className="Deal-right-nav-link" onClick={() => setSideComponent('Files')}>
-        <Typography style={{ fontSize: 15 }} className={classes.rightNavLink}>Files</Typography>
+        <Typography style={{ color: setColor('Files'), fontSize: 15 }} className={classes.rightNavLink}>Files</Typography>
       </div>
       {renderMarkets()}
       {renderChat()}

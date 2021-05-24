@@ -5,6 +5,8 @@ import { User } from '../security';
 export interface Deal extends Partial<Resource> {
   access: any[];
   account_id: string;
+  file_ids: string[];
+  files: Record<string, any>[];
   user_id: string;
   treaty_type: string[];
   insurance_type: string[];

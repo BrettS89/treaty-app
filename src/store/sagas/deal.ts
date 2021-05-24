@@ -5,6 +5,7 @@ import { dealSelector, userSelector } from '../selectors';
 import { ActionTypes } from '../actions';
 import app from '../../feathers';
 import _ from 'lodash';
+import { uploadFile } from '../../utilities/helpers';
 
 export default [
   createDealWatcher,
@@ -16,6 +17,8 @@ export default [
   followDealWatcher,
   unfollowDealWatcher,
   updateTimelineWatcher,
+  uploadDealFileWatcher,
+  removeFileWatcher,
 ];
 
 function * createDealWatcher() {
@@ -54,6 +57,14 @@ function * updateTimelineWatcher() {
   yield takeLatest(ActionTypes.UPDATE_TIMELINE, updateTimelineHandler);
 }
 
+function * uploadDealFileWatcher() {
+  yield takeLatest(ActionTypes.UPLOAD_DEAL_FILE, uploadDealFileHandler);
+}
+
+function * removeFileWatcher() {
+  yield takeLatest(ActionTypes.REMOVE_DEAL_FILE, removeFileHandler);
+}
+
 interface CreateDealHandlerProps { 
   payload: { 
     data: {
@@ -70,7 +81,7 @@ interface CreateDealHandlerProps {
 function * createDealHandler({ payload: { data, navigate, setComponent } }: CreateDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
-    const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true, timeline: true } }})
+    const createDeal = () => app.service('insurance/deal').create(data, { query: { $resolve: { details: true, timeline: true, files: true } }})
     const deal = yield call(createDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -101,6 +112,7 @@ function * brokerGetMyDealsHandler() {
         $resolve: {
           details: true,
           timeline: true,
+          files: true,
         },
       },
     };
@@ -126,7 +138,7 @@ interface EditDealHandlerProps {
 function * editDealHandler ({ payload:{ _id, data } }: EditDealHandlerProps) {
   try {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
-    const editDeal = () => app.service('insurance/deal').patch(_id, data, { query: { $resolve: { details: true, timeline: true } }});
+    const editDeal = () => app.service('insurance/deal').patch(_id, data, { query: { $resolve: { details: true, timeline: true, files: true } }});
     const deal = yield call(editDeal);
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -298,7 +310,6 @@ interface UpdateTimelineProps {
 
 function * updateTimelineHandler({ payload: { deal_id, field, row, status, _id } }: UpdateTimelineProps) {
   try {
-    console.log(status);
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
     const dealState = yield select(dealSelector);
     const myDealsClone = _.cloneDeep(dealState.myDeals);
@@ -316,6 +327,57 @@ function * updateTimelineHandler({ payload: { deal_id, field, row, status, _id }
     yield put({ type: ActionTypes.SET_MY_DEALS, payload: updatedDeals });
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
   } catch (e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+    yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
+  }
+}
+
+interface UploadDealFileHandlerProps {
+  type: string;
+  payload: {
+    account_id: string;
+    deal_id: string;
+    file: File,
+  };
+}
+
+function * uploadDealFileHandler({ payload: { account_id, deal_id, file } }: UploadDealFileHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const dealState = yield select(dealSelector);
+    const myDealsClone = _.cloneDeep(dealState.myDeals);
+    const deal = myDealsClone.find(d => d._id === deal_id);
+    const savedFile = yield call(uploadFile, file, account_id);
+    const fileIds = deal.file_ids ?? [];
+    const updatedFileIds = [...fileIds, savedFile._id];
+    const updateData = { file_ids: updatedFileIds };
+    yield put({ type: ActionTypes.EDIT_DEAL, payload: { _id: deal_id, data: updateData } });
+  } catch(e) {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
+    yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
+  }
+}
+
+interface RemoveFileHandlerProps {
+  type: string;
+  payload: {
+    deal_id: string;
+    file_id: string;
+  };
+}
+
+function * removeFileHandler({ payload: { deal_id, file_id } }: RemoveFileHandlerProps) {
+  try {
+    yield put({ type: ActionTypes.SET_APP_LOADING, payload: true });
+    const fn = () => app.service('storage/file').remove(file_id);
+    yield call(fn);
+    const dealState = yield select(dealSelector);
+    const myDealsClone = _.cloneDeep(dealState.myDeals);
+    const deal = myDealsClone.find(d => d._id === deal_id);
+    const updatedFileIds = deal.file_ids.filter(f => f !== file_id);
+    const updateData = { file_ids: updatedFileIds };
+    yield put({ type: ActionTypes.EDIT_DEAL, payload: { _id: deal_id, data: updateData } });
+  } catch(e) {
     yield put({ type: ActionTypes.SET_APP_LOADING, payload: false });
     yield put({ type: ActionTypes.SET_APP_ERROR, payload: e.message });
   }

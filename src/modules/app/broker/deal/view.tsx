@@ -20,18 +20,20 @@ interface DealViewProps {
   menuOptions: { value: string; name: string }[];
   onCancel(): void;
   onSaveField(str?: string): void;
+  removeFile(deal_id: string, file_id: string): void;
   setEditedValue(inpt: string | number): void;
   setEditing(str: string): void; 
   setEditingDetail(str: string): void
   setSideComponent(str: string): void;
   sideComponent: string;
   updateMarketList(str: string): void;
-  updateTerritory: any
+  updateTerritory: any;
+  uploadFile(e: any);
   upsertMarketNote(account_id: string, note: string): void;
 }
 
 const View = (props: DealViewProps) => {
-  const { addDetail, deal, editing, editingDetail, expensesOptions, generalTermsOptions, lists, marketNotes, menuOptions, onCancel, onSaveField, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent, updateMarketList, updateTerritory, upsertMarketNote } = props;
+  const { addDetail, deal, editing, editingDetail, expensesOptions, generalTermsOptions, lists, marketNotes, menuOptions, onCancel, onSaveField, removeFile, setEditedValue, setEditing, setEditingDetail, sideComponent, setSideComponent, updateMarketList, updateTerritory,uploadFile, upsertMarketNote } = props;
   const classes = useStyles();
 
   const renderTitle = (): JSX.Element => {
@@ -408,7 +410,11 @@ const View = (props: DealViewProps) => {
 
       case 'Files':
         return (
-          <Files />
+          <Files
+            deal={deal}
+            removeFile={removeFile}
+            uploadFile={uploadFile}
+          />
         )
 
       case 'Markets':

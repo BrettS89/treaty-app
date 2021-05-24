@@ -170,6 +170,24 @@ const Deal = (props: any) => {
         setMarketNotes(clonedMarketNotes);
       })
   };
+
+  const uploadFile = (e: any) => {
+    dispatch({
+      type: ActionTypes.UPLOAD_DEAL_FILE,
+      payload: {
+        account_id: deal.account_id,
+        deal_id,
+        file: e.target.files[0],
+      },
+    });
+  };
+
+  const removeFile = (file_id) => {
+    dispatch({
+      type: ActionTypes.REMOVE_DEAL_FILE,
+      payload: { deal_id, file_id },
+    });
+  };
   
   useEffect(() => {
     if (!deal) {
@@ -247,6 +265,7 @@ const Deal = (props: any) => {
       menuOptions={menuOptions}
       onCancel={onCancel}
       onSaveField={onSaveField}
+      removeFile={removeFile}
       setEditedValue={setEditedValue}
       setEditing={setEditing}
       setEditingDetail={setEditingDetail}
@@ -254,6 +273,7 @@ const Deal = (props: any) => {
       sideComponent={sideComponent}
       updateMarketList={updateMarketList}
       updateTerritory={updateTerritory}
+      uploadFile={uploadFile}
       upsertMarketNote={upsertMarketNote}
     />
   )
